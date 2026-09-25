@@ -1,0 +1,607 @@
+{
+  "titulo": "Missão Coimbra",
+  "introducao": "12 paragens para conhecer Coimbra. 6 descobertas para reconstruir um caderno perdido. Um passeio em conjunto, com a cidade a dar as pistas.",
+  "etapas": [
+    {
+      "local": "Docas do Mondego",
+      "tema": "Um batismo com vista",
+      "latitude": 40.20294,
+      "longitude": -8.42642,
+      "distanciaAcumulada": 0.0,
+      "imagem": "images/docas.jpg",
+      "foto": "Mondego e Docas, com a cidade ao fundo.",
+      "localizacao": "Passeio junto às esplanadas das Docas, na margem direita do Parque Verde.",
+      "pergunta": "Na tradição da Latada de Coimbra, que água está associada ao batismo dos caloiros?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Água do Mondego"
+        },
+        {
+          "letra": "B",
+          "texto": "Água de uma fonte do Jardim Botânico"
+        },
+        {
+          "letra": "C",
+          "texto": "Água trazida de casa pelos padrinhos"
+        },
+        {
+          "letra": "D",
+          "texto": "Água engarrafada, para não comprometer a média"
+        }
+      ],
+      "correta": "A",
+      "explicacao": "No final do cortejo da Latada, o batismo dos caloiros está associado à água do Mondego. O rio faz parte da memória académica da cidade — e não serve apenas de cenário às fotografias.",
+      "comica": false,
+      "fonte": "https://www.cm-coimbra.pt/areas/viver/cultura/eventos-regulares/8-festa-das-latas",
+      "fonteNome": "Câmara Municipal de Coimbra",
+      "caminho": "Sigam junto ao rio em direção à Ponte de Santa Clara e entrem no Largo da Portagem."
+    },
+    {
+      "local": "Largo da Portagem",
+      "tema": "Barulho antes dos exames",
+      "latitude": 40.20715,
+      "longitude": -8.42936,
+      "distanciaAcumulada": 0.51,
+      "imagem": "images/portagem.jpg",
+      "foto": "Portagem e entrada da Rua Ferreira Borges.",
+      "localizacao": "Junto à estátua de Joaquim António de Aguiar, deixando livre a passagem.",
+      "pergunta": "Nas antigas Latadas, para que serviam as latas e outros objetos ruidosos?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Para anunciar a chegada dos professores"
+        },
+        {
+          "letra": "B",
+          "texto": "Para pedir prioridade nas filas da cantina"
+        },
+        {
+          "letra": "C",
+          "texto": "Para importunar os colegas que ainda não tinham terminado o ano letivo"
+        },
+        {
+          "letra": "D",
+          "texto": "Para substituir a tuna em anos de orçamento apertado"
+        }
+      ],
+      "correta": "C",
+      "explicacao": "As antigas Latadas estavam ligadas ao fim das aulas e dos exames. Quem já tinha terminado fazia-se ouvir com latas e tachos. A festa mudou: estes costumes históricos não devem ser confundidos com regras atuais.",
+      "comica": false,
+      "fonte": "https://academica.pt/festas-academicas/festa-das-latas/",
+      "fonteNome": "Associação Académica de Coimbra",
+      "caminho": "Subam a Rua Ferreira Borges e virem para o Arco de Almedina."
+    },
+    {
+      "local": "Arco de Almedina",
+      "tema": "Uma passagem de capa traçada",
+      "latitude": 40.2087,
+      "longitude": -8.4287,
+      "distanciaAcumulada": 0.67,
+      "imagem": "images/arco-almedina.jpg",
+      "foto": "O arco enquadrado de baixo para cima.",
+      "localizacao": "Junto ao Arco, do lado da subida para a Alta, sem bloquear a entrada.",
+      "pergunta": "Segundo a tradição académica, como devem os estudantes trajados atravessar o Arco de Almedina?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Com a capa dobrada debaixo do braço"
+        },
+        {
+          "letra": "B",
+          "texto": "Com a capa traçada e em silêncio"
+        },
+        {
+          "letra": "C",
+          "texto": "De costas, para não deixar a sorte na Baixa"
+        },
+        {
+          "letra": "D",
+          "texto": "A mostrar o cartão de estudante ao arco"
+        }
+      ],
+      "correta": "B",
+      "explicacao": "Segundo a tradição académica, os estudantes trajados atravessam o Arco de Almedina com a capa traçada e em silêncio, como sinal de respeito. Este costume é também descrito no guia da ESEC.",
+      "comica": false,
+      "fonte": "https://www.esec.pt/wp-content/uploads/2024/09/ESEC_GUIA_2024_25.pdf",
+      "fonteNome": "Guia ESEC 2024/25 — página 46",
+      "caminho": "Subam pelo Quebra-Costas até à Sé Velha. O Quebra-Costas é uma passagem, sem pergunta própria.",
+      "categoria": "Tradição académica",
+      "missao": {
+        "id": "arco",
+        "titulo": "A passagem desenhada",
+        "instrucoes": "Procura o contorno da passagem de pedra. Segue-o com os olhos, de um lado ao outro.",
+        "pergunta": "Que forma reconheces no topo da passagem do Arco de Almedina?",
+        "respostas": [
+          {
+            "letra": "A",
+            "texto": "Um triângulo"
+          },
+          {
+            "letra": "B",
+            "texto": "Uma curva arredondada"
+          },
+          {
+            "letra": "C",
+            "texto": "Uma linha horizontal"
+          },
+          {
+            "letra": "D",
+            "texto": "Um ziguezague"
+          }
+        ],
+        "correta": "B",
+        "dica": "Olha para o vão por onde as pessoas passam, não para as janelas por cima.",
+        "explicacao": "O topo da passagem desenha uma curva arredondada. Recuperaste a primeira peça do caderno."
+      }
+    },
+    {
+      "local": "Sé Velha",
+      "tema": "Quando a cidade faz silêncio",
+      "latitude": 40.20883,
+      "longitude": -8.42641,
+      "distanciaAcumulada": 0.9,
+      "imagem": "images/se-velha.jpg",
+      "foto": "A fachada e a escadaria do portal principal.",
+      "localizacao": "Largo da Sé Velha, de frente para a escadaria do portal principal.",
+      "pergunta": "Que momento académico está tradicionalmente associado a esta escadaria e à abertura da Queima das Fitas?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "O batismo dos caloiros"
+        },
+        {
+          "letra": "B",
+          "texto": "A Serenata Monumental"
+        },
+        {
+          "letra": "C",
+          "texto": "A entrega dos diplomas de todas as faculdades"
+        },
+        {
+          "letra": "D",
+          "texto": "A leitura pública das negativas do semestre"
+        }
+      ],
+      "correta": "B",
+      "explicacao": "A escadaria da Sé Velha é o cenário emblemático da Serenata Monumental de abertura da Queima das Fitas. As guitarras e as vozes da Canção de Coimbra transformam este largo num lugar de encontro e despedida. O local de cada edição depende da organização.",
+      "comica": false,
+      "fonte": "https://www.cm-coimbra.pt/areas/visitar/conhecer-coimbra/monumentos/se-velha",
+      "fonteNome": "Câmara Municipal de Coimbra",
+      "caminho": "Sigam pela Rua do Norte e Rua de São Pedro até à zona da Faculdade de Letras, Biblioteca Geral e Porta Férrea.",
+      "missao": {
+        "id": "se-velha",
+        "titulo": "Uma igreja com ar de fortaleza",
+        "instrucoes": "Afasta-te o suficiente para observar a parte mais alta da fachada principal.",
+        "pergunta": "Que pormenor no remate da Sé Velha lembra um castelo?",
+        "respostas": [
+          {
+            "letra": "A",
+            "texto": "Uma cúpula"
+          },
+          {
+            "letra": "B",
+            "texto": "Uma chaminé"
+          },
+          {
+            "letra": "C",
+            "texto": "As ameias"
+          },
+          {
+            "letra": "D",
+            "texto": "Um telhado de vidro"
+          }
+        ],
+        "correta": "C",
+        "dica": "São os recortes de pedra, com alternância de partes altas e espaços abertos, no topo.",
+        "explicacao": "As ameias dão à fachada esse aspeto de fortaleza. A segunda peça estava à vista, lá em cima."
+      }
+    },
+    {
+      "local": "Faculdade de Letras · Porta Férrea · Biblioteca Geral",
+      "tema": "Uma universidade em viagem",
+      "latitude": 40.20772,
+      "longitude": -8.42501,
+      "distanciaAcumulada": 1.18,
+      "imagem": "images/porta-ferrea.jpg",
+      "foto": "Enquadramento da Faculdade de Letras, Biblioteca Geral e Porta Férrea.",
+      "localizacao": "Na zona do Largo da Porta Férrea, junto à Faculdade de Letras e à Biblioteca Geral. Reúnam o grupo sem bloquear as entradas.",
+      "pergunta": "A instituição que hoje conhecemos como Universidade de Coimbra foi fundada em que cidade, em 1290?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Porto"
+        },
+        {
+          "letra": "B",
+          "texto": "Coimbra"
+        },
+        {
+          "letra": "C",
+          "texto": "Lisboa"
+        },
+        {
+          "letra": "D",
+          "texto": "Numa reunião que ainda está à espera de ata"
+        }
+      ],
+      "correta": "C",
+      "explicacao": "A Universidade foi fundada em Lisboa, em 1290, por iniciativa de D. Dinis. Depois de várias transferências entre Lisboa e Coimbra, fixou-se definitivamente em Coimbra em 1537.",
+      "comica": false,
+      "fonte": "https://www.uc.pt/sobrenos/historia/xiii-a-xvi/",
+      "fonteNome": "Universidade de Coimbra",
+      "caminho": "Atravessem a Porta Férrea para entrar no Pátio das Escolas, se o acesso estiver aberto.",
+      "missao": {
+        "id": "porta-ferrea",
+        "titulo": "A entrada dentro da entrada",
+        "instrucoes": "Olha para a Porta Férrea e procura os elementos decorativos por cima da passagem.",
+        "pergunta": "Que elemento de identidade encontras na decoração desta entrada?",
+        "respostas": [
+          {
+            "letra": "A",
+            "texto": "Um brasão"
+          },
+          {
+            "letra": "B",
+            "texto": "Um semáforo"
+          },
+          {
+            "letra": "C",
+            "texto": "Uma bússola de navio"
+          },
+          {
+            "letra": "D",
+            "texto": "Uma balança digital"
+          }
+        ],
+        "correta": "A",
+        "dica": "Procura um escudo esculpido na pedra. A fotografia ajuda a localizar o detalhe.",
+        "explicacao": "O brasão faz parte da decoração da entrada. Olhar devagar revela mais do que atravessar a correr."
+      }
+    },
+    {
+      "local": "Pátio das Escolas",
+      "tema": "À procura da Cabra",
+      "latitude": 40.20737,
+      "longitude": -8.42601,
+      "distanciaAcumulada": 1.22,
+      "imagem": "images/paco-escolas.jpg",
+      "foto": "A Torre vista do Paço, destacando os sinos.",
+      "localizacao": "No terreiro, com vista para a Torre. Se o acesso estiver condicionado, fiquem num ponto exterior com vista para a Torre.",
+      "pergunta": "O que é a famosa “Cabra” da Universidade?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Um dos sinos da Torre da Universidade"
+        },
+        {
+          "letra": "B",
+          "texto": "A mascote que vive no Jardim Botânico"
+        },
+        {
+          "letra": "C",
+          "texto": "Uma cadeira em que ninguém passa à primeira"
+        },
+        {
+          "letra": "D",
+          "texto": "A alcunha da subida que acabámos de fazer"
+        }
+      ],
+      "correta": "A",
+      "explicacao": "“Cabra” é o nome pelo qual é conhecido um dos sinos da Torre. O relógio e os sinos marcaram os ritmos da vida académica. Coimbra já tinha notificações muito antes dos telemóveis.",
+      "comica": false,
+      "fonte": "https://pt.wikipedia.org/wiki/Pa%C3%A7o_das_Escolas",
+      "fonteNome": "Paço das Escolas — referência histórica",
+      "caminho": "Saiam pela Porta Férrea e sigam pela Rua Larga até à Praça D. Dinis, em frente ao Departamento de Matemática."
+    },
+    {
+      "local": "D. Dinis · Departamento de Matemática",
+      "tema": "Reconhecer o fundador",
+      "latitude": 40.20807,
+      "longitude": -8.42219,
+      "distanciaAcumulada": 1.45,
+      "imagem": "images/d-dinis.jpg",
+      "foto": "Estátua de D. Dinis com o Departamento de Matemática no enquadramento.",
+      "localizacao": "Praça D. Dinis, junto à estátua, em frente ao Departamento de Matemática.",
+      "pergunta": "Que rei está ligado à fundação da Universidade, em 1290?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "D. Afonso Henriques"
+        },
+        {
+          "letra": "B",
+          "texto": "D. Dinis"
+        },
+        {
+          "letra": "C",
+          "texto": "D. João III"
+        },
+        {
+          "letra": "D",
+          "texto": "D. Sebastião, que ficou de aparecer na matrícula"
+        }
+      ],
+      "correta": "B",
+      "explicacao": "D. Dinis está ligado à fundação do Estudo Geral, em 1290. D. João III teve outro papel decisivo: a instalação definitiva da Universidade em Coimbra, em 1537. Dois reis, dois momentos diferentes.",
+      "comica": false,
+      "fonte": "https://www.uc.pt/sobrenos/historia/xiii-a-xvi/",
+      "fonteNome": "Universidade de Coimbra",
+      "caminho": "Sigam até ao topo das Escadas Monumentais e observem as esferas de pedra antes de descer.",
+      "missao": {
+        "id": "d-dinis",
+        "titulo": "Um rei entre estudantes",
+        "instrucoes": "Observa a figura de D. Dinis, junto ao Departamento de Matemática.",
+        "pergunta": "Que objeto identifica o rei na cabeça da estátua?",
+        "respostas": [
+          {
+            "letra": "A",
+            "texto": "Um barrete académico"
+          },
+          {
+            "letra": "B",
+            "texto": "Um chapéu alto"
+          },
+          {
+            "letra": "C",
+            "texto": "Um capacete"
+          },
+          {
+            "letra": "D",
+            "texto": "Uma coroa"
+          }
+        ],
+        "correta": "D",
+        "dica": "Levanta o olhar até à cabeça da figura. Não é o traje dos estudantes que o rodeiam.",
+        "explicacao": "A coroa identifica a figura real. Mais uma peça para ligar a cidade à sua história."
+      }
+    },
+    {
+      "local": "Escadas Monumentais",
+      "tema": "As bolas das Monumentais",
+      "latitude": 40.20813,
+      "longitude": -8.42183,
+      "distanciaAcumulada": 1.5,
+      "imagem": "images/escadas.jpg",
+      "foto": "As esferas de pedra no topo das Escadas Monumentais.",
+      "localizacao": "No topo das Escadas Monumentais, junto às esferas de pedra, deixando livre a passagem.",
+      "pergunta": "Reza a lenda que as bolas das Monumentais cairão escada abaixo em que ocasião?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Quando todos os estudantes passarem aos exames à primeira"
+        },
+        {
+          "letra": "B",
+          "texto": "Quando a Cabra tocar fora de horas"
+        },
+        {
+          "letra": "C",
+          "texto": "Quando uma estudante terminar o curso e sair de Coimbra ainda virgem"
+        },
+        {
+          "letra": "D",
+          "texto": "Quando alguém conseguir subir as escadas sem perder o fôlego"
+        }
+      ],
+      "correta": "C",
+      "explicacao": "Reza a lenda académica que as bolas das Monumentais cairão escada abaixo quando uma estudante terminar o curso e sair de Coimbra ainda virgem. Quem conta a história costuma rematar: “Ainda lá estão!” É uma das lendas associadas à vida estudantil de Coimbra.",
+      "comica": true,
+      "caminho": "Depois da pergunta, desçam as Escadas Monumentais e sigam pela Rua de Oliveira Matos até à Praça da República e à AAC.",
+      "fonte": "https://dl.uc.pt/bitstream/10316.2/35447/1/rph45_artigo28.pdf",
+      "fonteNome": "Cidade Universitária de Coimbra. Património e exaltação — referência à lenda",
+      "categoria": "Lenda académica",
+      "missao": {
+        "id": "monumentais",
+        "titulo": "As guardiãs da descida",
+        "instrucoes": "Antes de descer, observa os elementos de pedra que dão nome à lenda acabada de descobrir.",
+        "pergunta": "Que forma têm as duas “bolas” das Monumentais?",
+        "respostas": [
+          {
+            "letra": "A",
+            "texto": "Cubos"
+          },
+          {
+            "letra": "B",
+            "texto": "Esferas"
+          },
+          {
+            "letra": "C",
+            "texto": "Pirâmides"
+          },
+          {
+            "letra": "D",
+            "texto": "Discos"
+          }
+        ],
+        "correta": "B",
+        "dica": "Procura as duas peças arredondadas no topo da escadaria.",
+        "explicacao": "As esferas são os elementos associados à lenda. A quinta peça fica guardada; agora, a descida espera pelo grupo."
+      }
+    },
+    {
+      "local": "Praça da República · AAC",
+      "tema": "Muito mais do que uma sigla",
+      "latitude": 40.21017,
+      "longitude": -8.42072,
+      "distanciaAcumulada": 1.85,
+      "imagem": "images/praca-republica.jpg",
+      "foto": "A entrada da AAC, com o nome ou símbolo legível.",
+      "localizacao": "Exterior da sede da AAC, na Rua Padre António Vieira, junto à Praça da República.",
+      "pergunta": "Em que ano foi fundada a Associação Académica de Coimbra?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "1887"
+        },
+        {
+          "letra": "B",
+          "texto": "1290"
+        },
+        {
+          "letra": "C",
+          "texto": "1974"
+        },
+        {
+          "letra": "D",
+          "texto": "No primeiro dia em que alguém disse “devíamos organizar isto”"
+        }
+      ],
+      "correta": "A",
+      "explicacao": "A AAC foi fundada em 3 de novembro de 1887. A sua história tem raízes na Academia Dramática e faz parte da vida associativa dos estudantes de Coimbra.",
+      "comica": false,
+      "fonte": "https://www.academica-oaf.pt/historia/",
+      "fonteNome": "Académica — história",
+      "caminho": "Sigam pela Rua Alexandre Herculano até aos Arcos de São Sebastião e à Rotunda do Papa."
+    },
+    {
+      "local": "Arcos de São Sebastião · Rotunda do Papa",
+      "tema": "Engenharia antes da fotografia",
+      "latitude": 40.20623,
+      "longitude": -8.42101,
+      "distanciaAcumulada": 2.2,
+      "imagem": "images/arcos-jardim.jpg",
+      "foto": "Os Arcos de São Sebastião com a zona da Rotunda do Papa.",
+      "localizacao": "No passeio junto aos Arcos e à Rotunda do Papa, do lado do Jardim Botânico. Não entrem na faixa de rodagem.",
+      "pergunta": "Qual era a função do aqueduto conhecido como “Arcos do Jardim”?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Servir de bancada para as serenatas"
+        },
+        {
+          "letra": "B",
+          "texto": "Pendurar as capas depois da chuva"
+        },
+        {
+          "letra": "C",
+          "texto": "Transportar água"
+        },
+        {
+          "letra": "D",
+          "texto": "Marcar a meta da corrida anual dos professores"
+        }
+      ],
+      "correta": "C",
+      "explicacao": "Estes arcos fazem parte do Aqueduto de São Sebastião. A sua função era conduzir água: antes de serem um enquadramento reconhecível da cidade, eram infraestrutura essencial.",
+      "comica": false,
+      "fonte": "https://www.visitportugal.com/pt-pt/NR/exeres/CC3D396E-5D15-42FB-923F-E8349A279216",
+      "fonteNome": "Turismo de Portugal",
+      "caminho": "Entrem no Jardim Botânico junto aos Arcos e sigam para o Quadrado Central, se o acesso estiver aberto.",
+      "aviso": "Confirmem que o Jardim e a passagem pela Mata estão abertos. Se necessário, consultem a alternativa em “Sobre a missão”."
+    },
+    {
+      "local": "Jardim Botânico",
+      "tema": "Aulas ao ar livre",
+      "latitude": 40.20529,
+      "longitude": -8.42157,
+      "distanciaAcumulada": 2.35,
+      "imagem": "images/botanico.jpg",
+      "foto": "O tanque do Quadrado Central, canteiros e árvores.",
+      "localizacao": "Junto ao tanque do Quadrado Central. Se a zona estiver encerrada, respondam junto à entrada do Jardim.",
+      "pergunta": "A criação do Jardim Botânico, em 1772, está ligada a quê?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "À preparação de um jardim privado para férias reais"
+        },
+        {
+          "letra": "B",
+          "texto": "À reforma pombalina da Universidade e ao ensino das ciências"
+        },
+        {
+          "letra": "C",
+          "texto": "À necessidade de esconder os estudantes antes dos exames"
+        },
+        {
+          "letra": "D",
+          "texto": "À fundação da Associação Académica"
+        }
+      ],
+      "correta": "B",
+      "explicacao": "O Jardim Botânico nasceu no contexto da reforma pombalina da Universidade. As plantas vivas faziam parte de uma nova aposta no estudo da natureza. Aqui, a ligação à Universidade também se encontra fora das salas de aula.",
+      "comica": false,
+      "fonte": "https://www.uc.pt/cultura/ideias/numeros-redondos/primeiros-passos-jb/",
+      "fonteNome": "Universidade de Coimbra",
+      "caminho": "Regressem às Docas pela Mata e pela saída da Rua da Alegria, se a travessia estiver aberta, seguindo depois para o Parque Verde. Não há outra paragem de quiz pelo caminho. Se a Mata estiver fechada, consultem a alternativa em “Sobre a missão”.",
+      "aviso": "A travessia depende dos acessos abertos. Não sigam a linha do mapa através de caminhos fechados.",
+      "missao": {
+        "id": "botanico",
+        "titulo": "O centro do jardim",
+        "instrucoes": "Junto ao Quadrado Central, procura o elemento que ocupa o centro do espaço. Se o acesso estiver fechado, usa a fotografia.",
+        "pergunta": "O que encontras no centro do Quadrado Central?",
+        "respostas": [
+          {
+            "letra": "A",
+            "texto": "Um coreto"
+          },
+          {
+            "letra": "B",
+            "texto": "Uma estátua equestre"
+          },
+          {
+            "letra": "C",
+            "texto": "Um tanque com fonte"
+          },
+          {
+            "letra": "D",
+            "texto": "Um relógio de torre"
+          }
+        ],
+        "correta": "C",
+        "dica": "Procura a água. A resposta está num elemento construído no centro do jardim.",
+        "explicacao": "O tanque com fonte marca o centro deste espaço. A sexta peça está recuperada. A fotografia espera por ti nas Docas."
+      }
+    },
+    {
+      "local": "De volta às Docas",
+      "tema": "A última descoberta à beira-rio",
+      "latitude": 40.20294,
+      "longitude": -8.42642,
+      "distanciaAcumulada": 3.3,
+      "imagem": "images/docas.jpg",
+      "foto": "O grupo no mesmo enquadramento da partida.",
+      "localizacao": "No ponto de partida, junto às esplanadas das Docas.",
+      "pergunta": "Qual destas associações está correta?",
+      "respostas": [
+        {
+          "letra": "A",
+          "texto": "Latada: acolhimento dos novos estudantes. Queima das Fitas: celebração ligada ao final do ano letivo."
+        },
+        {
+          "letra": "B",
+          "texto": "Latada: festa de Natal. Queima das Fitas: início das aulas."
+        },
+        {
+          "letra": "C",
+          "texto": "Latada: festa dos professores. Queima das Fitas: festa medieval."
+        },
+        {
+          "letra": "D",
+          "texto": "Latada: exame de condução. Queima das Fitas: avaria na impressora."
+        }
+      ],
+      "correta": "A",
+      "explicacao": "A Latada acolhe os novos estudantes; a Queima das Fitas está associada à celebração do percurso académico no final do ano letivo. São festas distintas. E vocês já têm uma terceira tradição: terminar o passeio nas Docas.",
+      "comica": false,
+      "fonte": "https://www.cm-coimbra.pt/areas/viver/cultura/eventos-regulares/queima-das-fitas",
+      "fonteNome": "Câmara Municipal de Coimbra"
+    }
+  ],
+  "caderno": {
+    "titulo": "O caderno perdido de um estudante",
+    "introducao": "Nas Docas, começa uma história: um estudante deixou um caderno com uma fotografia desfeita. Pelo caminho, seis detalhes da cidade guardam as peças. Observem, conversem e juntem-nas no regresso ao rio.",
+    "imagemFinal": "images/coimbra-hero.jpg",
+    "imagemAlt": "Coimbra sobre a encosta, com o rio Mondego em primeiro plano.",
+    "palavras": [
+      "Em",
+      "Coimbra,",
+      "cada",
+      "passo",
+      "conta",
+      "histórias."
+    ],
+    "dicaFinal": "Segue a linha da encosta e a margem do rio. As palavras também ajudam: a frase começa por “Em Coimbra,” e termina em “histórias.”",
+    "mensagemFinal": "“Trouxe livros para Coimbra. Levo histórias de cada rua e de quem caminhou comigo.” A última página está completa. Agora, a cidade também faz parte do vosso caderno."
+  }
+}

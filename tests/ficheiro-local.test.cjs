@@ -50,7 +50,7 @@ test('A formatação está incluída no HTML e corresponde ao CSS editável', ()
 });
 test('O JavaScript incluído está atualizado, na ordem certa e depois do conteúdo', () => {
   const sources=[...html.matchAll(/<script data-local-source="([^"]+)">\n([\s\S]*?)\n<\/script>/g)];
-  assert.deepEqual(sources.map(m=>m[1]),['vendor/leaflet/leaflet.js','caderno.js','ficheiro-local.js','memorias.js','script.js']);
+  assert.deepEqual(sources.map(m=>m[1]),['vendor/leaflet/leaflet.js','ficheiro-local.js','memorias.js','script.js']);
   for(const m of sources){assert.equal(m[2],fs.readFileSync(m[1],'utf8'));new vm.Script(m[2]);assert.ok(m.index>html.indexOf('id="route-data"'));}
 });
 test('A inicialização local preenche o conteúdo principal e liga o botão de início', async () => {
@@ -68,9 +68,9 @@ test('A inicialização local preenche o conteúdo principal e liga o botão de 
     setInterval(){},window:{},console:{error:(...args)=>errors.push(args)},
     fetch:()=>{throw new Error('fetch inesperado');}
   });
-  for(const name of ['caderno.js','ficheiro-local.js','memorias.js','script.js'])vm.runInContext(fs.readFileSync(name,'utf8'),ctx,{filename:name});
+  for(const name of ['ficheiro-local.js','memorias.js','script.js'])vm.runInContext(fs.readFileSync(name,'utf8'),ctx,{filename:name});
   await new Promise(resolve=>setImmediate(resolve));
   assert.deepEqual(errors,[]);
-  assert.match(element('#main').innerHTML,/Um caderno/);
+  assert.match(element('#main').innerHTML,/Começar o percurso/);
   assert.equal(typeof element('#start-walk').listeners.click,'function');
 });

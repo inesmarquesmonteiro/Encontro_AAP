@@ -1,6 +1,6 @@
 {
   "titulo": "Missão Coimbra",
-  "introducao": "12 paragens para conhecer Coimbra. 6 descobertas para reconstruir um caderno perdido. Um passeio em conjunto, com a cidade a dar as pistas.",
+  "introducao": "12 paragens, 12 perguntas e uma fotografia em cada lugar. No fim, as tuas memórias ligam-se numa rede de Coimbra.",
   "etapas": [
     {
       "local": "Docas do Mondego",
@@ -106,34 +106,7 @@
       "fonte": "https://www.esec.pt/wp-content/uploads/2024/09/ESEC_GUIA_2024_25.pdf",
       "fonteNome": "Guia ESEC 2024/25 — página 46",
       "caminho": "Subam pelo Quebra-Costas até à Sé Velha. O Quebra-Costas é uma passagem, sem pergunta própria.",
-      "categoria": "Tradição académica",
-      "missao": {
-        "id": "arco",
-        "titulo": "A passagem desenhada",
-        "instrucoes": "Procura o contorno da passagem de pedra. Segue-o com os olhos, de um lado ao outro.",
-        "pergunta": "Que forma reconheces no topo da passagem do Arco de Almedina?",
-        "respostas": [
-          {
-            "letra": "A",
-            "texto": "Um triângulo"
-          },
-          {
-            "letra": "B",
-            "texto": "Uma curva arredondada"
-          },
-          {
-            "letra": "C",
-            "texto": "Uma linha horizontal"
-          },
-          {
-            "letra": "D",
-            "texto": "Um ziguezague"
-          }
-        ],
-        "correta": "B",
-        "dica": "Olha para o vão por onde as pessoas passam, não para as janelas por cima.",
-        "explicacao": "O topo da passagem desenha uma curva arredondada. Recuperaste a primeira peça do caderno."
-      }
+      "categoria": "Tradição académica"
     },
     {
       "local": "Sé Velha",
@@ -168,34 +141,7 @@
       "comica": false,
       "fonte": "https://www.cm-coimbra.pt/areas/visitar/conhecer-coimbra/monumentos/se-velha",
       "fonteNome": "Câmara Municipal de Coimbra",
-      "caminho": "Sigam pela Rua do Norte e Rua de São Pedro até à zona da Faculdade de Letras, Biblioteca Geral e Porta Férrea.",
-      "missao": {
-        "id": "se-velha",
-        "titulo": "Uma igreja com ar de fortaleza",
-        "instrucoes": "Afasta-te o suficiente para observar a parte mais alta da fachada principal.",
-        "pergunta": "Que pormenor no remate da Sé Velha lembra um castelo?",
-        "respostas": [
-          {
-            "letra": "A",
-            "texto": "Uma cúpula"
-          },
-          {
-            "letra": "B",
-            "texto": "Uma chaminé"
-          },
-          {
-            "letra": "C",
-            "texto": "As ameias"
-          },
-          {
-            "letra": "D",
-            "texto": "Um telhado de vidro"
-          }
-        ],
-        "correta": "C",
-        "dica": "São os recortes de pedra, com alternância de partes altas e espaços abertos, no topo.",
-        "explicacao": "As ameias dão à fachada esse aspeto de fortaleza. A segunda peça estava à vista, lá em cima."
-      }
+      "caminho": "Sigam pela Rua do Norte e Rua de São Pedro até à zona da Faculdade de Letras, Biblioteca Geral e Porta Férrea."
     },
     {
       "local": "Faculdade de Letras · Porta Férrea · Biblioteca Geral",
@@ -230,34 +176,7 @@
       "comica": false,
       "fonte": "https://www.uc.pt/sobrenos/historia/xiii-a-xvi/",
       "fonteNome": "Universidade de Coimbra",
-      "caminho": "Atravessem a Porta Férrea para entrar no Pátio das Escolas, se o acesso estiver aberto.",
-      "missao": {
-        "id": "porta-ferrea",
-        "titulo": "A entrada dentro da entrada",
-        "instrucoes": "Olha para a Porta Férrea e procura os elementos decorativos por cima da passagem.",
-        "pergunta": "Que elemento de identidade encontras na decoração desta entrada?",
-        "respostas": [
-          {
-            "letra": "A",
-            "texto": "Um brasão"
-          },
-          {
-            "letra": "B",
-            "texto": "Um semáforo"
-          },
-          {
-            "letra": "C",
-            "texto": "Uma bússola de navio"
-          },
-          {
-            "letra": "D",
-            "texto": "Uma balança digital"
-          }
-        ],
-        "correta": "A",
-        "dica": "Procura um escudo esculpido na pedra. A fotografia ajuda a localizar o detalhe.",
-        "explicacao": "O brasão faz parte da decoração da entrada. Olhar devagar revela mais do que atravessar a correr."
-      }
+      "caminho": "Atravessem a Porta Férrea para entrar no Pátio das Escolas, se o acesso estiver aberto."
     },
     {
       "local": "Pátio das Escolas",
@@ -327,34 +246,7 @@
       "comica": false,
       "fonte": "https://www.uc.pt/sobrenos/historia/xiii-a-xvi/",
       "fonteNome": "Universidade de Coimbra",
-      "caminho": "Sigam até ao topo das Escadas Monumentais e observem as esferas de pedra antes de descer.",
-      "missao": {
-        "id": "d-dinis",
-        "titulo": "Um rei entre estudantes",
-        "instrucoes": "Observa a figura de D. Dinis, junto ao Departamento de Matemática.",
-        "pergunta": "Que objeto identifica o rei na cabeça da estátua?",
-        "respostas": [
-          {
-            "letra": "A",
-            "texto": "Um barrete académico"
-          },
-          {
-            "letra": "B",
-            "texto": "Um chapéu alto"
-          },
-          {
-            "letra": "C",
-            "texto": "Um capacete"
-          },
-          {
-            "letra": "D",
-            "texto": "Uma coroa"
-          }
-        ],
-        "correta": "D",
-        "dica": "Levanta o olhar até à cabeça da figura. Não é o traje dos estudantes que o rodeiam.",
-        "explicacao": "A coroa identifica a figura real. Mais uma peça para ligar a cidade à sua história."
-      }
+      "caminho": "Sigam até ao topo das Escadas Monumentais e observem as esferas de pedra antes de descer."
     },
     {
       "local": "Escadas Monumentais",
@@ -390,34 +282,7 @@
       "caminho": "Depois da pergunta, desçam as Escadas Monumentais e sigam pela Rua de Oliveira Matos até à Praça da República e à AAC.",
       "fonte": "https://dl.uc.pt/bitstream/10316.2/35447/1/rph45_artigo28.pdf",
       "fonteNome": "Cidade Universitária de Coimbra. Património e exaltação — referência à lenda",
-      "categoria": "Lenda académica",
-      "missao": {
-        "id": "monumentais",
-        "titulo": "As guardiãs da descida",
-        "instrucoes": "Antes de descer, observa os elementos de pedra que dão nome à lenda acabada de descobrir.",
-        "pergunta": "Que forma têm as duas “bolas” das Monumentais?",
-        "respostas": [
-          {
-            "letra": "A",
-            "texto": "Cubos"
-          },
-          {
-            "letra": "B",
-            "texto": "Esferas"
-          },
-          {
-            "letra": "C",
-            "texto": "Pirâmides"
-          },
-          {
-            "letra": "D",
-            "texto": "Discos"
-          }
-        ],
-        "correta": "B",
-        "dica": "Procura as duas peças arredondadas no topo da escadaria.",
-        "explicacao": "As esferas são os elementos associados à lenda. A quinta peça fica guardada; agora, a descida espera pelo grupo."
-      }
+      "categoria": "Lenda académica"
     },
     {
       "local": "Praça da República · AAC",
@@ -488,7 +353,7 @@
       "fonte": "https://www.visitportugal.com/pt-pt/NR/exeres/CC3D396E-5D15-42FB-923F-E8349A279216",
       "fonteNome": "Turismo de Portugal",
       "caminho": "Entrem no Jardim Botânico junto aos Arcos e sigam para o Quadrado Central, se o acesso estiver aberto.",
-      "aviso": "Confirmem que o Jardim e a passagem pela Mata estão abertos. Se necessário, consultem a alternativa em “Sobre a missão”."
+      "aviso": "Confirmem que o Jardim e a passagem pela Mata estão abertos. Se necessário, consultem a alternativa em “Sobre o passeio”."
     },
     {
       "local": "Jardim Botânico",
@@ -523,35 +388,8 @@
       "comica": false,
       "fonte": "https://www.uc.pt/cultura/ideias/numeros-redondos/primeiros-passos-jb/",
       "fonteNome": "Universidade de Coimbra",
-      "caminho": "Regressem às Docas pela Mata e pela saída da Rua da Alegria, se a travessia estiver aberta, seguindo depois para o Parque Verde. Não há outra paragem de quiz pelo caminho. Se a Mata estiver fechada, consultem a alternativa em “Sobre a missão”.",
-      "aviso": "A travessia depende dos acessos abertos. Não sigam a linha do mapa através de caminhos fechados.",
-      "missao": {
-        "id": "botanico",
-        "titulo": "O centro do jardim",
-        "instrucoes": "Junto ao Quadrado Central, procura o elemento que ocupa o centro do espaço. Se o acesso estiver fechado, usa a fotografia.",
-        "pergunta": "O que encontras no centro do Quadrado Central?",
-        "respostas": [
-          {
-            "letra": "A",
-            "texto": "Um coreto"
-          },
-          {
-            "letra": "B",
-            "texto": "Uma estátua equestre"
-          },
-          {
-            "letra": "C",
-            "texto": "Um tanque com fonte"
-          },
-          {
-            "letra": "D",
-            "texto": "Um relógio de torre"
-          }
-        ],
-        "correta": "C",
-        "dica": "Procura a água. A resposta está num elemento construído no centro do jardim.",
-        "explicacao": "O tanque com fonte marca o centro deste espaço. A sexta peça está recuperada. A fotografia espera por ti nas Docas."
-      }
+      "caminho": "Regressem às Docas pela Mata e pela saída da Rua da Alegria, se a travessia estiver aberta, seguindo depois para o Parque Verde. Não há outra paragem de quiz pelo caminho. Se a Mata estiver fechada, consultem a alternativa em “Sobre o passeio”.",
+      "aviso": "A travessia depende dos acessos abertos. Não sigam a linha do mapa através de caminhos fechados."
     },
     {
       "local": "De volta às Docas",
@@ -587,21 +425,5 @@
       "fonte": "https://www.cm-coimbra.pt/areas/viver/cultura/eventos-regulares/queima-das-fitas",
       "fonteNome": "Câmara Municipal de Coimbra"
     }
-  ],
-  "caderno": {
-    "titulo": "O caderno perdido de um estudante",
-    "introducao": "Nas Docas, começa uma história: um estudante deixou um caderno com uma fotografia desfeita. Pelo caminho, seis detalhes da cidade guardam as peças. Observem, conversem e juntem-nas no regresso ao rio.",
-    "imagemFinal": "images/coimbra-hero.jpg",
-    "imagemAlt": "Coimbra sobre a encosta, com o rio Mondego em primeiro plano.",
-    "palavras": [
-      "Em",
-      "Coimbra,",
-      "cada",
-      "passo",
-      "conta",
-      "histórias."
-    ],
-    "dicaFinal": "Segue a linha da encosta e a margem do rio. As palavras também ajudam: a frase começa por “Em Coimbra,” e termina em “histórias.”",
-    "mensagemFinal": "“Trouxe livros para Coimbra. Levo histórias de cada rua e de quem caminhou comigo.” A última página está completa. Agora, a cidade também faz parte do vosso caderno."
-  }
+  ]
 }

@@ -9,10 +9,10 @@ css = (root / 'style.css').read_text()
 html = re.sub(r'<style id="app-styles">[\s\S]*?</style>', lambda _: '<style id="app-styles">\n' + css + '\n  </style>', html)
 data = (root / 'dados.json').read_text().replace('<', '\\u003c')
 html = re.sub(r'<script id="route-data" type="application/json">[\s\S]*?</script>', lambda _: '<script id="route-data" type="application/json">' + data + '</script>', html)
-html = re.sub(r'\s*<script defer src="(?:vendor/leaflet/leaflet|caderno|ficheiro-local|script)\.js(?:\?[^\"]*)?"></script>', '', html)
+html = re.sub(r'\s*<script defer src="(?:vendor/leaflet/leaflet|caderno|ficheiro-local|memorias|script)\.js(?:\?[^\"]*)?"></script>', '', html)
 html = re.sub(r'\n<!-- BEGIN LOCAL SCRIPTS -->[\s\S]*?<!-- END LOCAL SCRIPTS -->', '', html)
 scripts = []
-for name in ['vendor/leaflet/leaflet.js', 'caderno.js', 'ficheiro-local.js', 'memorias.js', 'script.js']:
+for name in ['vendor/leaflet/leaflet.js', 'ficheiro-local.js', 'memorias.js', 'script.js']:
     source = (root / name).read_text()
     if re.search(r'</script', source, re.I):
         raise ValueError('Fecho de script no código: ' + name)

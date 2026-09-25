@@ -2,10 +2,9 @@
 // Fotografias privadas: apenas IndexedDB neste navegador, nunca enviadas.
 const Memories = (() => {
   const volatile = new Map();
-  let dbPromise, urls=[], revision=0, busy=false;
+  let dbPromise, urls=[], busy=false, onChange=()=>{};
   const trip = () => state ? `${contentKey}:${state.startedAt}` : '';
   const key = i => `${trip()}:${i}`;
-  const el = id => document.getElementById(id);
   function database(){
     if(!dbPromise)dbPromise=new Promise((resolve,reject)=>{
       const request=indexedDB.open('coimbra-memorias',1);
@@ -42,96 +41,167 @@ const Memories = (() => {
   }
   function clearURLs(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[];}
   function url(b){const u=URL.createObjectURL(b);urls.push(u);return u;}
-  function stageHTML(){return `<aside class="memory-stop"><p class="eyebrow">UMA REDE DE MEMÓRIAS</p><h3>Este lugar, pelo teu olhar.</h3><p>Guarda uma fotografia para o teu postal de Coimbra.</p><button type="button" class="secondary" data-action="memories">Guardar uma memória</button><small>Opcional · podes continuar sem fotografia.</small></aside>`;}
-  function open(){
-    if(!state)return;
-    if(!el('memories-dialog')){
-      const dialog=document.createElement('dialog');dialog.id='memories-dialog';dialog.className='memories-dialog';dialog.setAttribute('aria-labelledby','memories-title');
-      dialog.innerHTML=`<div class="dialog-heading"><div><p class="eyebrow">O TEU POSTAL DO PASSEIO</p><h2 id="memories-title">Coimbra — uma rede de memórias</h2></div><button class="icon-button" data-close aria-label="Fechar fotografias">×</button></div><p>Os lugares ligam-se. As memórias ficam contigo.</p><label class="file-label" for="photo-stop">Local da fotografia</label><select id="photo-stop"></select><div class="memory-actions"><label class="secondary photo-pick">Tirar fotografia<input id="photo-camera" type="file" accept="image/*" capture="environment"></label><label class="secondary photo-pick">Escolher da galeria<input id="photo-gallery" type="file" accept="image/*"></label></div><p class="fine-print">Uma fotografia por paragem. Adicionar outra substitui a anterior. As fotografias ficam apenas neste navegador; descarrega o cartão para conservar a recordação.</p><p id="photo-status" role="status" aria-live="polite"></p><div class="memory-selection"><h3>Escolhe até seis fotografias</h3><span id="photo-count"></span></div><div id="photo-list" class="photo-list"></div><button id="make-postcard" class="primary" type="button">Criar o meu cartão</button><p class="fine-print">Podes criar uma prévia durante o passeio ou o cartão final quando terminares.</p><div id="postcard-output" hidden><img id="postcard-preview" alt="Postal de Coimbra com as fotografias escolhidas ligadas numa rede de memórias"><a id="download-postcard" class="primary" download="coimbra-rede-de-memorias.png">Descarregar cartão</a><a id="open-postcard" class="text-button" target="_blank" rel="noopener">Abrir imagem para guardar</a><p class="fine-print">Também podes manter o dedo sobre a imagem e escolher guardar.</p></div>`;
-      document.body.append(dialog);
-      for(const id of ['photo-camera','photo-gallery'])el(id).addEventListener('change',addPhoto);
-      el('make-postcard').addEventListener('click',makeCard);
-      dialog.addEventListener('close',()=>{revision++;clearURLs();el('postcard-output').hidden=true;});
-      el('photo-list').addEventListener('change',selectPhoto);
-      el('photo-list').addEventListener('click',removePhoto);
-    }
-    el('photo-stop').innerHTML=etapas.map((e,i)=>`<option value="${i}">${i+1}. ${esc(e.local)}</option>`).join('');el('photo-stop').value=String(state.index);
-    el('photo-status').textContent='';el('memories-dialog').showModal();refresh();
+
+  // Bloco de fotografia de uma paragem: guardar é imediato, sem criar o cartão.
+  const camera='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+  function slotHTML(index,record){
+    const name=esc(etapas[index].local);
+    if(record)return `<div class="photo-saved"><img src="${url(record.blob)}" alt="A tua fotografia em ${name}"><div><p><strong>Fotografia guardada</strong>Vai entrar no teu cartão final.</p><div class="photo-tools"><label class="chip">Trocar<input class="visually-hidden" type="file" accept="image/*" data-photo-for="${index}"></label><button type="button" class="chip" data-remove-photo="${index}">Remover</button></div></div></div>`;
+    return `<label class="photo-cta">${camera}<span><strong>Tirar fotografia</strong><small>Opcional · fica para o cartão final</small></span><input class="visually-hidden" type="file" accept="image/*" capture="environment" data-photo-for="${index}"></label><label class="gallery-link">ou escolher da galeria<input class="visually-hidden" type="file" accept="image/*" data-photo-for="${index}"></label>`;
   }
-  function status(message){el('photo-status').textContent=message;}
-  function lock(value){busy=value;el('make-postcard').disabled=value;el('photo-stop').disabled=value;for(const id of ['photo-camera','photo-gallery'])el(id).disabled=value;el('photo-list').querySelectorAll('button,input').forEach(e=>e.disabled=value);}
-  async function refresh(){
-    const version=++revision,photos=await records();if(version!==revision||!el('memories-dialog').open)return;
-    clearURLs();el('postcard-output').hidden=true;
-    el('photo-count').textContent=`${photos.filter(p=>p.selected).length} / 6 escolhidas`;
-    el('photo-list').innerHTML=photos.length?photos.map(p=>`<article class="memory-thumb"><img src="${url(p.blob)}" alt="A tua fotografia em ${esc(etapas[p.index].local)}"><label><input type="checkbox" data-select-photo="${p.index}" ${p.selected?'checked':''}>${esc(etapas[p.index].local)}</label><button type="button" class="text-button" data-remove-photo="${p.index}">Remover fotografia</button></article>`).join(''):'<p class="fine-print">Ainda não há fotografias. O cartão também pode ser criado só com o roteiro.</p>';
+  async function paintSlot(index){
+    const slot=document.querySelector(`[data-photo-slot="${index}"]`);if(!slot)return;
+    const record=(await records()).find(r=>r.index===index);
+    const body=slot.querySelector('.photo-body');if(body)body.innerHTML=slotHTML(index,record);
   }
-  async function addPhoto(event){
-    const file=event.target.files[0];event.target.value='';if(!file||busy)return;
-    const index=Number(el('photo-stop').value),currentTrip=trip(),id=key(index);lock(true);status('A preparar a fotografia…');
+  function status(index,message){const el=document.querySelector(`[data-photo-slot="${index}"] .photo-status`);if(el)el.textContent=message;}
+  async function addPhoto(input){
+    const file=input.files[0],index=Number(input.dataset.photoFor);input.value='';if(!file||busy)return;
+    busy=true;const currentTrip=trip();status(index,'A guardar a fotografia…');
     try{
       const compressed=await compress(file);if(trip()!==currentTrip)return;
-      const photos=await records(),previous=photos.find(p=>p.id===id);
-      const saved=await store({id,trip:currentTrip,index,blob:compressed,selected:previous?previous.selected:photos.filter(p=>p.selected).length<6});
-      await refresh();status(saved?'Fotografia guardada neste dispositivo.':'Fotografia disponível só nesta sessão: não foi possível guardá-la no navegador. Descarrega o cartão antes de fechar.');
-    }catch(error){status(error.message);}finally{lock(false);}
+      const saved=await store({id:key(index),trip:currentTrip,index,blob:compressed});
+      await paintSlot(index);status(index,saved?'':'Guardada só nesta sessão: o navegador não permite guardar. Mantém a página aberta.');onChange(index);
+    }catch(error){status(index,error.message);}finally{busy=false;}
   }
-  async function selectPhoto(event){
-    const input=event.target;if(!input.matches('[data-select-photo]')||busy)return;lock(true);
-    try{const photos=await records(),p=photos.find(p=>p.index===Number(input.dataset.selectPhoto));if(!p)return;
-      if(input.checked&&photos.filter(p=>p.selected).length>=6){input.checked=false;status('Escolhe no máximo seis fotografias. Desmarca uma para escolher outra.');return;}
-      p.selected=input.checked;const saved=await store(p);await refresh();status(saved?'Seleção atualizada.':'Seleção atualizada apenas nesta sessão.');
-    }finally{lock(false);}
+  async function removePhoto(index){
+    if(busy)return;busy=true;
+    try{const r=(await records()).find(r=>r.index===index);if(r){await store(r,true);await paintSlot(index);onChange(index);}}finally{busy=false;}
   }
-  async function removePhoto(event){
-    const button=event.target.closest('[data-remove-photo]');if(!button||busy)return;lock(true);
-    try{const p=(await records()).find(p=>p.index===Number(button.dataset.removePhoto));if(p){const saved=await store(p,true);await refresh();status(saved?'Fotografia removida deste passeio.':'Removida nesta sessão; não foi possível atualizar o armazenamento.');}}finally{lock(false);}
+  if(typeof document!=='undefined'){
+    document.addEventListener('change',e=>{if(e.target.matches?.('[data-photo-for]'))addPhoto(e.target);});
+    document.addEventListener('click',e=>{const b=e.target.closest?.('[data-remove-photo]');if(b)removePhoto(Number(b.dataset.removePhoto));});
   }
-  function line(ctx,points,color,width=3){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();}
-  function text(ctx,value,x,y,max,size=24,color='#183f36',family='sans-serif'){
-    ctx.fillStyle=color;ctx.font=`${size}px ${family}`;
-    while(ctx.measureText(value).width>max&&size>14){size--;ctx.font=`${size}px ${family}`;}ctx.fillText(value,x,y,max);
+
+  // ——— Cartão final: a rede elétrica de Coimbra, com uma fotografia em cada nó ———
+  const W=1080,H=1920,NET_TOP=400,NET_BOTTOM=1400,LABEL=52,NIGHT='#0a211d',GOLD='#f4c761',CREAM='#fbf3df';
+  function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function cover(c,img,x,y,w,h){const s=Math.max(w/img.naturalWidth,h/img.naturalHeight),sw=w/s,sh=h/s;c.drawImage(img,(img.naturalWidth-sw)/2,(img.naturalHeight-sh)/2,sw,sh,x,y,w,h);}
+  function fit(c,value,max,size,style){c.font=`${style} ${size}px ${FONT}`;while(c.measureText(value).width>max&&size>12){size--;c.font=`${style} ${size}px ${FONT}`;}return size;}
+  let FONT='sans-serif';
+  const SERIF=`"DM Serif Display", Georgia, serif`;
+  // Projeção simples das coordenadas reais; o Mondego segue a margem direita.
+  const RIVER=[[40.2135,-8.4345],[40.2100,-8.4322],[40.2072,-8.4307],[40.2045,-8.4288],[40.2022,-8.4262],[40.2000,-8.4222],[40.1985,-8.4170]];
+  // Cada nó ocupa o círculo e a etiqueta por baixo; afastam-se sem perder a geografia.
+  function layout(radii,labels,box){
+    const lat0=etapas[0].latitude,k=Math.cos(lat0*Math.PI/180);
+    const raw=etapas.map(e=>[(e.longitude)*k,-e.latitude]);
+    const xs=raw.map(p=>p[0]),ys=raw.map(p=>p[1]),minX=Math.min(...xs),minY=Math.min(...ys);
+    const bw=Math.max(...xs)-minX||1e-6,bh=Math.max(...ys)-minY||1e-6,s=Math.min(box.w/bw,box.h/bh);
+    const ox=box.x+(box.w-bw*s)/2,oy=box.y+(box.h-bh*s)/2;
+    const project=(lat,lon)=>[ox+(lon*k-minX)*s,oy+(-lat-minY)*s];
+    const home=etapas.map(e=>project(e.latitude,e.longitude));
+    home.forEach((p,i)=>home.slice(0,i).forEach(q=>{if(Math.hypot(p[0]-q[0],p[1]-q[1])<1){p[0]+=40;p[1]+=30;}}));
+    const pts=home.map(p=>[...p]),gap=18;
+    const rect=i=>{const [x,y]=pts[i],r=radii[i],half=Math.max(r,labels[i]/2);return [x-half,y-r,x+half,y+r+LABEL];};
+    for(let it=0;it<900;it++){const pull=it<700?.01:0;
+      for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+        const a=rect(i),b=rect(j),ox2=Math.min(a[2],b[2])-Math.max(a[0],b[0])+gap,oy2=Math.min(a[3],b[3])-Math.max(a[1],b[1])+gap;
+        if(ox2<=0||oy2<=0)continue;
+        if(ox2<oy2*.5){const dir=pts[j][0]>=pts[i][0]?1:-1;pts[i][0]-=dir*ox2/2;pts[j][0]+=dir*ox2/2;}
+        else{const dir=pts[j][1]>=pts[i][1]?1:-1;pts[i][1]-=dir*oy2/2;pts[j][1]+=dir*oy2/2;}
+      }
+      pts.forEach((p,i)=>{p[0]+=(home[i][0]-p[0])*pull;p[1]+=(home[i][1]-p[1])*pull;const r=radii[i],half=Math.max(r,labels[i]/2);p[0]=Math.min(W-30-half,Math.max(30+half,p[0]));p[1]=Math.min(NET_BOTTOM-r-LABEL,Math.max(NET_TOP+r,p[1]));});
+    }
+    return {pts,project};
   }
-  function cover(ctx,img,x,y,w,h){const scale=Math.max(w/img.naturalWidth,h/img.naturalHeight),sw=w/scale,sh=h/scale;ctx.drawImage(img,(img.naturalWidth-sw)/2,(img.naturalHeight-sh)/2,sw,sh,x,y,w,h);}
-  async function makeCard(){
-    if(busy)return;lock(true);status('A desenhar a tua rede de memórias…');
-    const version=revision;
-    try{
-      const chosen=(await records()).filter(p=>p.selected).slice(0,6);
-      const images=await Promise.all(chosen.map(p=>image(p.blob)));
-      const canvas=document.createElement('canvas');canvas.width=1440;canvas.height=1920;const c=canvas.getContext('2d');
-      c.fillStyle='#f8f5ec';c.fillRect(0,0,1440,1920);
-      // Azulejos geométricos e silhueta desenhados localmente; sem imagens externas.
-      for(let x=30;x<1440;x+=60){line(c,[[x,24],[x+20,44],[x,64],[x-20,44],[x,24]],'#8bb4b7',2);line(c,[[x,1860],[x+20,1880],[x,1900],[x-20,1880],[x,1860]],'#8bb4b7',2);}
-      text(c,'COIMBRA',80,178,1280,88,'#183f36','Georgia');text(c,'UMA REDE DE MEMÓRIAS',84,232,1280,26);
-      const date=new Date(state.startedAt).toLocaleDateString('pt-PT');
-      text(c,`${date}  ·  ${km(TOTAL)} km de roteiro  ·  ${elapsedTime()} decorridos`,84,285,1250,25);
-      text(c,state.finishedAt?'Do Mondego à Alta. E de volta.':'O passeio continua · cartão em construção',84,327,1250,22,'#63716a');
-      // Torre da Universidade, telhados e arcos sobre uma linha do Mondego.
-      line(c,[[800,215],[835,215],[835,174],[885,150],[935,174],[935,215],[973,215],[973,125],[987,125],[987,93],[1012,76],[1037,93],[1037,125],[1051,125],[1051,215],[1100,215],[1100,180],[1150,155],[1200,180],[1200,215],[1350,215]],'#91a99a',3);
-      c.strokeStyle='#91a99a';c.beginPath();c.arc(1012,145,12,0,Math.PI*2);c.stroke();line(c,[[1012,145],[1012,135]],'#91a99a',2);
-      for(let i=0;i<6;i++){c.beginPath();c.arc(875+i*78,255,27,Math.PI,0);c.stroke();}
-      line(c,[[800,275],[900,280],[1000,274],[1110,285],[1230,278],[1350,286]],'#8bb4b7',3);
-      const imageByStop=new Map(chosen.map((p,i)=>[p.index,images[i]]));
-      const slots=[...chosen];
-      for(const index of [...new Set([0,2,3,5,7,10,...etapas.map((_,i)=>i)])]){if(slots.length>=6)break;if(etapas[index]&&!slots.some(p=>p.index===index))slots.push({index});}
-      slots.sort((a,b)=>a.index-b.index);
-      const centers=slots.map((_,i)=>[i%2?1060:380,465+Math.floor(i/2)*400]);
-      const routePoints=[];for(let row=0;row<Math.ceil(slots.length/2);row++){const a=row*2,b=a+1;if(row%2){if(centers[b])routePoints.push(centers[b]);routePoints.push(centers[a]);}else{routePoints.push(centers[a]);if(centers[b])routePoints.push(centers[b]);}}
-      line(c,routePoints,'#b59a59',5);
-      slots.forEach((p,i)=>{
-        const [cx,cy]=centers[i],x=cx-280,y=cy+24;
-        c.fillStyle='#183f36';c.beginPath();c.arc(cx,cy,13,0,Math.PI*2);c.fill();c.fillStyle='#edce91';c.beginPath();c.arc(cx,cy,5,0,Math.PI*2);c.fill();
-        c.fillStyle='#fff';c.fillRect(x-8,y-8,576,302);
-        if(imageByStop.has(p.index))cover(c,imageByStop.get(p.index),x,y,560,240);else{c.fillStyle='#e7ece2';c.fillRect(x,y,560,240);text(c,String(p.index+1).padStart(2,'0'),x+220,y+153,160,90,'#90a18b','Georgia');}
-        text(c,`${String(p.index+1).padStart(2,'0')} · ${etapas[p.index].local}`,x+10,y+276,535,23);
-      });
-      text(c,'Os lugares ligam-se. As memórias ficam contigo.',80,1730,1280,36,'#183f36','Georgia');
-      text(c,'E-REDES · Coimbra, em boa companhia',80,1780,1280,24,'#63716a');
-      const output=await blob(canvas,'image/png');if(version!==revision||!el('memories-dialog').open)return;
-      const outputURL=url(output);el('postcard-preview').src=outputURL;el('download-postcard').href=outputURL;el('open-postcard').href=outputURL;el('postcard-output').hidden=false;status('Cartão pronto. Descarrega-o para guardar a recordação.');el('postcard-output').scrollIntoView({block:'start',behavior:'smooth'});
-    }catch(error){status('Não foi possível criar o cartão. '+error.message);}finally{lock(false);}
+  function curve(c,a,b,sag,offset=0){
+    const dx=b[0]-a[0],dy=b[1]-a[1],len=Math.hypot(dx,dy)||1,nx=-dy/len*offset,ny=dx/len*offset;
+    const cx=(a[0]+b[0])/2+nx,cy=(a[1]+b[1])/2+ny+sag;
+    c.beginPath();c.moveTo(a[0]+nx,a[1]+ny);c.quadraticCurveTo(cx,cy,b[0]+nx,b[1]+ny);
+    return t=>[(1-t)*(1-t)*(a[0]+nx)+2*(1-t)*t*cx+t*t*(b[0]+nx),(1-t)*(1-t)*(a[1]+ny)+2*(1-t)*t*cy+t*t*(b[1]+ny)];
   }
-  if(typeof document!=='undefined')document.addEventListener('click',e=>{if(e.target.closest('[data-action="memories"]'))open();});
-  return {stageHTML,open};
+  function pylon(c,x,y){
+    c.save();c.strokeStyle='rgba(244,199,97,.75)';c.lineWidth=2.5;c.beginPath();
+    c.moveTo(x-16,y+62);c.lineTo(x,y-6);c.lineTo(x+16,y+62);
+    c.moveTo(x-20,y+4);c.lineTo(x+20,y+4);c.moveTo(x-14,y+22);c.lineTo(x+14,y+22);
+    c.moveTo(x-11,y+14);c.lineTo(x+9,y+34);c.moveTo(x+11,y+14);c.lineTo(x-9,y+34);
+    c.moveTo(x-8,y+36);c.lineTo(x+13,y+58);c.moveTo(x+8,y+36);c.lineTo(x-13,y+58);c.stroke();c.restore();
+  }
+  function bolt(c,x,y,s,color){c.fillStyle=color;c.beginPath();[[.1,-1],[-.55,.15],[-.05,.15],[-.2,1],[.55,-.2],[.05,-.2],[.25,-1]].forEach(([px,py],i)=>i?c.lineTo(x+px*s,y+py*s):c.moveTo(x+px*s,y+py*s));c.closePath();c.fill();}
+  function skyline(c,random){
+    const base=1840,hill=x=>base-24-80*Math.exp(-(((x-600)/300)**2))-14*Math.exp(-(((x-150)/150)**2));
+    const shapes=[];
+    for(let x=-10;x<W+10;){const w=30+random()*40,h=26+random()*52;shapes.push({x,w,h,top:hill(x+w/2)-h,roof:random()>.5});x+=w-2;}
+    c.fillStyle='#06140f';
+    c.beginPath();c.moveTo(0,H);for(let x=0;x<=W;x+=10)c.lineTo(x,hill(x)+8);c.lineTo(W,H);c.fill();
+    shapes.forEach(s=>{c.beginPath();c.moveTo(s.x,base+40);c.lineTo(s.x,s.top);if(s.roof)c.lineTo(s.x+s.w/2,s.top-16);c.lineTo(s.x+s.w,s.top);c.lineTo(s.x+s.w,base+40);c.fill();});
+    // Paço das Escolas, Torre da Universidade e Sé Velha, em silhueta.
+    const t=hill(600);c.fillRect(480,t-80,250,120);c.fillRect(584,t-140,40,100);c.fillRect(577,t-150,54,12);
+    c.beginPath();c.arc(604,t-150,15,Math.PI,0);c.fill();c.fillRect(602,t-184,4,24);
+    c.fillRect(310,hill(360)-96,110,130);for(let i=0;i<6;i++)c.fillRect(310+i*19,hill(360)-110,11,16);
+    c.fillStyle=GOLD;c.globalAlpha=.9;c.beginPath();c.arc(604,t-118,8,0,Math.PI*2);c.fill();
+    // Janelas acesas: a cidade ligada.
+    [...shapes,{x:480,w:250,top:t-80},{x:584,w:40,top:t-140},{x:310,w:110,top:hill(360)-96}].forEach(s=>{
+      for(let y=s.top+14;y<base-4;y+=22)for(let x=s.x+8;x<s.x+s.w-12;x+=18){if(random()<.28){c.globalAlpha=.45+random()*.5;c.fillRect(x,y,7,10);}}
+    });
+    c.globalAlpha=1;
+    const water=c.createLinearGradient(0,base,0,H);water.addColorStop(0,'#0d3531');water.addColorStop(1,'#061712');c.fillStyle=water;c.fillRect(0,base,W,H-base);
+    c.fillStyle=GOLD;for(let i=0;i<46;i++){c.globalAlpha=.15+random()*.35;c.fillRect(random()*W,base+8+random()*(H-base-16),14+random()*40,2);}c.globalAlpha=1;
+  }
+  async function draw(){
+    try{await Promise.all([document.fonts.load(`150px ${SERIF}`),document.fonts.load(`italic 60px ${SERIF}`),document.fonts.load('600 24px "DM Sans"')]);if(document.fonts.check('600 24px "DM Sans"'))FONT='"DM Sans", system-ui, sans-serif';}catch{}
+    const photos=await records(),byStop=new Map();
+    await Promise.all(photos.map(async p=>{try{byStop.set(p.index,await image(p.blob));}catch{}}));
+    const random=rng(state.startedAt|0);
+    const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const c=canvas.getContext('2d');
+    const bg=c.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#123a33');bg.addColorStop(.55,NIGHT);bg.addColorStop(1,'#071814');c.fillStyle=bg;c.fillRect(0,0,W,H);
+    c.fillStyle='rgba(251,243,223,.07)';for(let y=24;y<1600;y+=36)for(let x=24;x<W;x+=36)c.fillRect(x,y,2,2);
+    // Cabeçalho
+    const date=new Date(state.finishedAt||Date.now()).toLocaleDateString('pt-PT',{day:'numeric',month:'long',year:'numeric'});
+    c.textAlign='center';c.fillStyle=GOLD;fit(c,`MISSÃO COIMBRA  ·  ${date.toUpperCase()}`,900,26,'700');c.fillText(`MISSÃO COIMBRA  ·  ${date.toUpperCase()}`,W/2,118);
+    c.fillStyle=CREAM;c.font=`150px ${SERIF}`;c.fillText('Coimbra',W/2,262);
+    c.fillStyle=GOLD;c.font=`italic 54px ${SERIF}`;c.fillText('a energia que nos liga',W/2,334);
+    // Rede
+    const radius=byStop.size>8?78:88,radii=etapas.map((_,i)=>byStop.has(i)?radius:44);
+    const names=etapas.map(e=>e.local.split(' · ')[0]);
+    const labels=names.map(n=>{const size=fit(c,n,230,22,'600');c.font=`600 ${size}px ${FONT}`;return c.measureText(n).width+24;});
+    const {pts,project}=layout(radii,labels,{x:170,y:450,w:820,h:840});
+    const river=RIVER.map(([la,lo])=>project(la,lo));
+    c.save();c.beginPath();c.rect(0,NET_TOP-20,W,NET_BOTTOM-NET_TOP+20);c.clip();
+    c.lineCap='round';c.lineJoin='round';
+    const riverPath=()=>{c.beginPath();c.moveTo(...river[0]);for(let i=1;i<river.length-1;i++){const mx=(river[i][0]+river[i+1][0])/2,my=(river[i][1]+river[i+1][1])/2;c.quadraticCurveTo(river[i][0],river[i][1],mx,my);}c.lineTo(...river.at(-1));};
+    riverPath();c.strokeStyle='rgba(38,110,112,.55)';c.lineWidth=90;c.stroke();
+    riverPath();c.strokeStyle='rgba(120,190,190,.35)';c.lineWidth=2;c.setLineDash([2,16]);c.stroke();c.setLineDash([]);
+    // O nome do rio fica no troço mais afastado dos nós.
+    const spots=river.slice(0,-1).flatMap((a,i)=>{const b=river[i+1];return [.25,.5,.75].map(t=>({x:a[0]+(b[0]-a[0])*t,y:a[1]+(b[1]-a[1])*t,angle:Math.atan2(b[1]-a[1],b[0]-a[0])}));}).filter(q=>q.x>90&&q.x<W-90&&q.y>NET_TOP+70&&q.y<NET_BOTTOM-70);
+    const clearance=q=>Math.min(...pts.map((p,i)=>Math.max(Math.abs(p[0]-q.x)-Math.max(radii[i],labels[i]/2),p[1]-radii[i]-q.y,q.y-p[1]-radii[i]-LABEL)));
+    const spot=spots.reduce((best,q)=>!best||clearance(q)>clearance(best)?q:best,null);
+    if(spot){let angle=spot.angle;if(Math.abs(angle)>Math.PI/2)angle+=Math.PI;c.save();c.translate(spot.x,spot.y);c.textAlign='center';c.rotate(angle);c.fillStyle='rgba(190,230,225,.7)';c.font=`italic 30px ${SERIF}`;c.fillText('Mondego',0,10);c.restore();}
+    c.restore();
+    // Linhas de energia entre paragens consecutivas, a fechar o circuito.
+    const edges=pts.map((p,i)=>[p,pts[(i+1)%pts.length],i]);
+    c.save();c.shadowColor='rgba(244,199,97,.85)';c.shadowBlur=18;
+    for(const [a,b] of edges){const len=Math.hypot(b[0]-a[0],b[1]-a[1]),sag=Math.min(60,len*.12);for(const off of [-5,5]){curve(c,a,b,sag,off);c.strokeStyle='rgba(244,199,97,.9)';c.lineWidth=2.5;c.stroke();}}
+    c.restore();
+    for(const [a,b,i] of edges){
+      const len=Math.hypot(b[0]-a[0],b[1]-a[1]);if(len<radii[i]+radii[(i+1)%pts.length]+40)continue;
+      const at=curve(c,a,b,Math.min(60,len*.12));
+      c.save();c.shadowColor=CREAM;c.shadowBlur=14;c.fillStyle='#fffbe9';
+      const steps=Math.floor(len/46);for(let s=1;s<steps;s++){const [x,y]=at(s/steps);if(Math.hypot(x-a[0],y-a[1])>radii[i]+8&&Math.hypot(x-b[0],y-b[1])>radii[(i+1)%pts.length]+8){c.beginPath();c.arc(x,y,s%3?2.5:4.5,0,Math.PI*2);c.fill();}}
+      c.restore();
+      if(len>260){const [x,y]=at(.5);pylon(c,x,y);}
+    }
+    // Nós: fotografias como subestações da rede.
+    pts.forEach(([x,y],i)=>{
+      const r=radii[i],img=byStop.get(i);
+      c.save();c.shadowColor='rgba(244,199,97,.9)';c.shadowBlur=img?40:22;c.fillStyle=img?CREAM:'#123a33';c.beginPath();c.arc(x,y,r+(img?8:0),0,Math.PI*2);c.fill();c.restore();
+      if(img){c.save();c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.clip();cover(c,img,x-r,y-r,r*2,r*2);c.restore();
+        const bx=x+r*.72,by=y-r*.72;c.fillStyle=GOLD;c.beginPath();c.arc(bx,by,22,0,Math.PI*2);c.fill();c.fillStyle=NIGHT;c.font=`700 22px ${FONT}`;c.fillText(String(i+1),bx,by+8);}
+      else{c.strokeStyle=GOLD;c.lineWidth=3;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.stroke();c.fillStyle=GOLD;c.font=`34px ${SERIF}`;c.fillText(String(i+1),x,y+12);}
+      const name=names[i],size=fit(c,name,230,22,'600'),tw=c.measureText(name).width,ly=y+r+36;
+      c.fillStyle='rgba(6,20,16,.72)';c.beginPath();c.roundRect(x-tw/2-12,ly-size-4,tw+24,size+16,14);c.fill();
+      c.fillStyle=CREAM;c.font=`600 ${size}px ${FONT}`;c.fillText(name,x,ly+2);
+    });
+    // Resumo
+    const stats=[[`${byStop.size}/${etapas.length}`,'MEMÓRIAS LIGADAS'],[`${km(TOTAL)} km`,'DE CIRCUITO'],[elapsedTime(),'TEMPO DECORRIDO']];
+    stats.forEach(([v,l],i)=>{const x=W/6+i*W/3;c.fillStyle=CREAM;c.font=`58px ${SERIF}`;c.fillText(v,x,1500);c.fillStyle='rgba(251,243,223,.6)';c.font=`700 18px ${FONT}`;c.fillText(l,x,1536);});
+    c.fillStyle='rgba(244,199,97,.35)';c.fillRect(W/3,1452,1,94);c.fillRect(2*W/3,1452,1,94);
+    skyline(c,random);
+    bolt(c,W/2-236,1884,15,GOLD);
+    c.fillStyle=CREAM;c.font=`600 24px ${FONT}`;c.fillText('E-REDES  ·  Coimbra, em boa companhia',W/2+12,1893);
+    return blob(canvas,'image/png');
+  }
+  async function makeCard(){if(busy)throw new Error('Aguarda que a fotografia termine de ser guardada.');return draw();}
+  return {slotHTML,paintSlot,records,store,compress,makeCard,clearURLs,set onChange(fn){onChange=fn;}};
 })();

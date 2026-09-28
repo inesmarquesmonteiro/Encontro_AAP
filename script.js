@@ -159,7 +159,7 @@ function contentFingerprint(data){
   let hash=2166136261;for(let i=0;i<text.length;i++){hash^=text.charCodeAt(i);hash=Math.imul(hash,16777619);}return(hash>>>0).toString(16);
 }
 async function initialize(){
-  main.innerHTML='<section class="finish"><p class="eyebrow">MISSÃO COIMBRA</p><h1>A preparar<br><em>o passeio…</em></h1></section>';
+  main.innerHTML='<section class="finish"><p class="eyebrow">COIMBRA EM REDE</p><h1>A preparar<br><em>o passeio…</em></h1></section>';
   try{
     config=validateData(await readRouteData());
     etapas=config.etapas.map((e,i)=>({...e,id:i+1,respostas:e.respostas.map(r=>r.texto),correta:letters.indexOf(e.correta),foto:e.foto||e.local}));
@@ -170,7 +170,7 @@ async function initialize(){
     load();if(state)save();welcome();
   }catch(error){
     console.error('Conteúdo do passeio:',error);
-    main.innerHTML=`<section class="finish"><p class="eyebrow">MISSÃO COIMBRA</p><h1>O passeio ainda<br><em>não abriu.</em></h1><p>Não foi possível carregar o conteúdo. Tenta novamente ou verifica o ficheiro dados.json.</p><p class="fine-print">${esc(error.message)}</p><button id="retry-load" class="primary">Tentar novamente</button></section>`;
+    main.innerHTML=`<section class="finish"><p class="eyebrow">COIMBRA EM REDE</p><h1>O passeio ainda<br><em>não abriu.</em></h1><p>Não foi possível carregar o conteúdo. Tenta novamente ou verifica o ficheiro dados.json.</p><p class="fine-print">${esc(error.message)}</p><button id="retry-load" class="primary">Tentar novamente</button></section>`;
     $('#retry-load').addEventListener('click',initialize);
   }
 }

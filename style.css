@@ -1,4 +1,4 @@
-/* Missão Coimbra: pensado primeiro para o telemóvel. Verde do rio, pedra quente e a luz da rede. */
+/* Coimbra em Rede: pensado primeiro para o telemóvel. Verde do rio, pedra quente e a luz da rede. */
 :root{--green:#183f36;--green-dark:#0f2d26;--night:#0a211d;--paper:#f8f6ef;--white:#fff;--ink:#1f3a33;--muted:#61706a;--line:#dedfd6;--gold:#e7b851;--gold-soft:#f6e6bf;--soft:#ebefe7;--radius:16px;font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none;color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);min-height:100dvh;display:flex;flex-direction:column}

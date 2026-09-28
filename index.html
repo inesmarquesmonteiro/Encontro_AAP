@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#183f36">
   <meta name="description" content="Um passeio a pé por Coimbra: 11 paragens, uma pergunta e uma fotografia em cada lugar e, no fim, um cartão com as memórias ligadas numa rede.">
-  <title>Coimbra em rede — um passeio para descobrir em conjunto</title>
+  <title>Coimbra em Rede — um passeio para descobrir em conjunto</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23183f36'/%3E%3Cpath d='M22 6 12 21h7l-2 13 11-16h-7.5Z' fill='%23e7b851'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <style id="app-styles">
-/* Missão Coimbra: pensado primeiro para o telemóvel. Verde do rio, pedra quente e a luz da rede. */
+/* Coimbra em Rede: pensado primeiro para o telemóvel. Verde do rio, pedra quente e a luz da rede. */
 :root{--green:#183f36;--green-dark:#0f2d26;--night:#0a211d;--paper:#f8f6ef;--white:#fff;--ink:#1f3a33;--muted:#61706a;--line:#dedfd6;--gold:#e7b851;--gold-soft:#f6e6bf;--soft:#ebefe7;--radius:16px;font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none;color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);min-height:100dvh;display:flex;flex-direction:column}
@@ -239,7 +239,7 @@ body:has(dialog[open]){overflow:hidden}
 <body>
   <a class="skip-link" href="#main">Saltar para o conteúdo</a>
   <header class="header">
-    <a class="brand" href="index.html" aria-label="Missão Coimbra — início"><span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2Z" fill="#e7b851"/></svg></span><span>MISSÃO <b>COIMBRA</b></span></a>
+    <a class="brand" href="index.html" aria-label="Coimbra em Rede — início"><span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2Z" fill="#e7b851"/></svg></span><span>COIMBRA <b>EM REDE</b></span></a>
     <button class="map-button" type="button" data-action="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2V5Z M9 3v16 M15 5v16"/></svg><span>Mapa</span></button>
   </header>
   <div id="storage-warning" class="notice" role="status" hidden>O navegador não permite guardar o progresso. Mantém esta página aberta durante o passeio.</div>
@@ -279,7 +279,7 @@ body:has(dialog[open]){overflow:hidden}
     <div class="dialog-actions"><button class="primary" id="apply-route" disabled>Usar este roteiro e recomeçar</button><button class="secondary" id="restore-route">Restaurar roteiro incluído e recomeçar</button></div>
   </dialog>
 <script id="route-data" type="application/json">{
-  "titulo": "Missão Coimbra",
+  "titulo": "Coimbra em Rede",
   "introducao": "11 paragens, 11 perguntas e uma fotografia em cada lugar. No fim, as tuas memórias ligam-se numa rede de Coimbra.",
   "etapas": [
     {
@@ -699,6 +699,9 @@ body:has(dialog[open]){overflow:hidden}
 
 
 
+
+
+
 <!-- BEGIN LOCAL SCRIPTS -->
 <script data-local-source="vendor/leaflet/leaflet.js">
 /* @preserve
@@ -916,7 +919,7 @@ const Memories = (() => {
     c.fillStyle='rgba(251,243,223,.07)';for(let y=24;y<1600;y+=36)for(let x=24;x<W;x+=36)c.fillRect(x,y,2,2);
     // Cabeçalho
     const date=new Date(state.finishedAt||Date.now()).toLocaleDateString('pt-PT',{day:'numeric',month:'long',year:'numeric'});
-    c.textAlign='center';c.fillStyle=GOLD;fit(c,`MISSÃO COIMBRA  ·  ${date.toUpperCase()}`,900,26,'700');c.fillText(`MISSÃO COIMBRA  ·  ${date.toUpperCase()}`,W/2,118);
+    c.textAlign='center';c.fillStyle=GOLD;fit(c,`COIMBRA EM REDE  ·  ${date.toUpperCase()}`,900,26,'700');c.fillText(`COIMBRA EM REDE  ·  ${date.toUpperCase()}`,W/2,118);
     c.fillStyle=CREAM;c.font=`150px ${SERIF}`;c.fillText('Coimbra',W/2,262);
     c.fillStyle=GOLD;c.font=`italic 54px ${SERIF}`;c.fillText('a energia que nos liga',W/2,334);
     // Rede
@@ -1136,7 +1139,7 @@ function contentFingerprint(data){
   let hash=2166136261;for(let i=0;i<text.length;i++){hash^=text.charCodeAt(i);hash=Math.imul(hash,16777619);}return(hash>>>0).toString(16);
 }
 async function initialize(){
-  main.innerHTML='<section class="finish"><p class="eyebrow">MISSÃO COIMBRA</p><h1>A preparar<br><em>o passeio…</em></h1></section>';
+  main.innerHTML='<section class="finish"><p class="eyebrow">COIMBRA EM REDE</p><h1>A preparar<br><em>o passeio…</em></h1></section>';
   try{
     config=validateData(await readRouteData());
     etapas=config.etapas.map((e,i)=>({...e,id:i+1,respostas:e.respostas.map(r=>r.texto),correta:letters.indexOf(e.correta),foto:e.foto||e.local}));
@@ -1147,7 +1150,7 @@ async function initialize(){
     load();if(state)save();welcome();
   }catch(error){
     console.error('Conteúdo do passeio:',error);
-    main.innerHTML=`<section class="finish"><p class="eyebrow">MISSÃO COIMBRA</p><h1>O passeio ainda<br><em>não abriu.</em></h1><p>Não foi possível carregar o conteúdo. Tenta novamente ou verifica o ficheiro dados.json.</p><p class="fine-print">${esc(error.message)}</p><button id="retry-load" class="primary">Tentar novamente</button></section>`;
+    main.innerHTML=`<section class="finish"><p class="eyebrow">COIMBRA EM REDE</p><h1>O passeio ainda<br><em>não abriu.</em></h1><p>Não foi possível carregar o conteúdo. Tenta novamente ou verifica o ficheiro dados.json.</p><p class="fine-print">${esc(error.message)}</p><button id="retry-load" class="primary">Tentar novamente</button></section>`;
     $('#retry-load').addEventListener('click',initialize);
   }
 }

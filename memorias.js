@@ -149,7 +149,7 @@ const Memories = (() => {
     c.fillStyle='rgba(251,243,223,.07)';for(let y=24;y<1600;y+=36)for(let x=24;x<W;x+=36)c.fillRect(x,y,2,2);
     // Cabeçalho
     const date=new Date(state.finishedAt||Date.now()).toLocaleDateString('pt-PT',{day:'numeric',month:'long',year:'numeric'});
-    c.textAlign='center';c.fillStyle=GOLD;fit(c,`MISSÃO COIMBRA  ·  ${date.toUpperCase()}`,900,26,'700');c.fillText(`MISSÃO COIMBRA  ·  ${date.toUpperCase()}`,W/2,118);
+    c.textAlign='center';c.fillStyle=GOLD;fit(c,`COIMBRA EM REDE  ·  ${date.toUpperCase()}`,900,26,'700');c.fillText(`COIMBRA EM REDE  ·  ${date.toUpperCase()}`,W/2,118);
     c.fillStyle=CREAM;c.font=`150px ${SERIF}`;c.fillText('Coimbra',W/2,262);
     c.fillStyle=GOLD;c.font=`italic 54px ${SERIF}`;c.fillText('a energia que nos liga',W/2,334);
     // Rede

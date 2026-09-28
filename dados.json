@@ -1,6 +1,6 @@
 {
   "titulo": "Missão Coimbra",
-  "introducao": "12 paragens, 12 perguntas e uma fotografia em cada lugar. No fim, as tuas memórias ligam-se numa rede de Coimbra.",
+  "introducao": "11 paragens, 11 perguntas e uma fotografia em cada lugar. No fim, as tuas memórias ligam-se numa rede de Coimbra.",
   "etapas": [
     {
       "local": "Docas do Mondego",
@@ -287,53 +287,17 @@
       "correta": "C",
       "explicacao": "Reza a lenda académica que as bolas das Monumentais cairão escada abaixo quando uma estudante terminar o curso e sair de Coimbra ainda virgem. Quem conta a história costuma rematar: “Ainda lá estão!” É uma das lendas associadas à vida estudantil de Coimbra.",
       "comica": true,
-      "caminho": "Depois da pergunta, desçam as Escadas Monumentais e sigam pela Rua de Oliveira Matos até à Praça da República e à AAC.",
+      "caminho": "Depois da pergunta, sigam até aos Arcos de São Sebastião e à Rotunda do Papa, sem descer até à Praça da República.",
       "fonte": "https://dl.uc.pt/bitstream/10316.2/35447/1/rph45_artigo28.pdf",
       "fonteNome": "Cidade Universitária de Coimbra. Património e exaltação — referência à lenda",
       "categoria": "Lenda académica"
-    },
-    {
-      "local": "Praça da República · AAC",
-      "tema": "Muito mais do que uma sigla",
-      "latitude": 40.21017,
-      "longitude": -8.42072,
-      "distanciaAcumulada": 1.85,
-      "imagem": "images/praca-republica.jpg",
-      "foto": "A entrada da AAC, com o nome ou símbolo legível.",
-      "desafio": "Desafio: o grupo a formar as letras A, A e C.",
-      "localizacao": "Exterior da sede da AAC, na Rua Padre António Vieira, junto à Praça da República.",
-      "pergunta": "Em que ano foi fundada a Associação Académica de Coimbra?",
-      "respostas": [
-        {
-          "letra": "A",
-          "texto": "1887"
-        },
-        {
-          "letra": "B",
-          "texto": "1290"
-        },
-        {
-          "letra": "C",
-          "texto": "1974"
-        },
-        {
-          "letra": "D",
-          "texto": "No primeiro dia em que alguém disse “devíamos organizar isto”"
-        }
-      ],
-      "correta": "A",
-      "explicacao": "A AAC foi fundada em 3 de novembro de 1887. A sua história tem raízes na Academia Dramática e faz parte da vida associativa dos estudantes de Coimbra.",
-      "comica": false,
-      "fonte": "https://www.academica-oaf.pt/historia/",
-      "fonteNome": "Académica — história",
-      "caminho": "Sigam pela Rua Alexandre Herculano até aos Arcos de São Sebastião e à Rotunda do Papa."
     },
     {
       "local": "Arcos de São Sebastião · Rotunda do Papa",
       "tema": "Engenharia antes da fotografia",
       "latitude": 40.20623,
       "longitude": -8.42101,
-      "distanciaAcumulada": 2.2,
+      "distanciaAcumulada": 1.85,
       "imagem": "images/arcos-jardim.jpg",
       "foto": "Os Arcos de São Sebastião com a zona da Rotunda do Papa.",
       "desafio": "Contem os arcos que cabem na fotografia — sem sair do passeio.",
@@ -370,7 +334,7 @@
       "tema": "Aulas ao ar livre",
       "latitude": 40.20529,
       "longitude": -8.42157,
-      "distanciaAcumulada": 2.35,
+      "distanciaAcumulada": 2.0,
       "imagem": "images/botanico.jpg",
       "foto": "O tanque do Quadrado Central, canteiros e árvores.",
       "desafio": "Desafio: fotografem a planta mais estranha que encontrarem perto do tanque.",
@@ -407,7 +371,7 @@
       "tema": "A última descoberta à beira-rio",
       "latitude": 40.20294,
       "longitude": -8.42642,
-      "distanciaAcumulada": 3.3,
+      "distanciaAcumulada": 2.95,
       "imagem": "images/docas.jpg",
       "foto": "O grupo no mesmo enquadramento da partida.",
       "desafio": "Desafio final: repitam a fotografia da partida, no mesmo sítio e na mesma pose.",

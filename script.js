@@ -76,9 +76,10 @@ function afterAnswer(e,a){
 
 function renderFinish(){
   resetPage();
-  main.innerHTML=`<section class="finish fade-in" aria-labelledby="finish-title"><p class="eyebrow">CIRCUITO FECHADO</p><h1 id="finish-title">Coimbra ficou <em>ligada.</em></h1><p class="finish-stats">${etapas.length} paragens · ${km(TOTAL)} km · <span data-elapsed>${elapsedTime()}</span></p><figure class="card-frame"><div id="card-slot" class="card-slot" role="status">A ligar a tua rede…</div></figure><div class="card-actions" id="card-actions" hidden><button class="primary" id="share-card" type="button" hidden>Partilhar cartão</button><a class="primary" id="download-card" download="coimbra-a-energia-que-nos-liga.png">Guardar cartão</a></div><p class="fine-print center">As fotografias ficam só neste telemóvel. Guarda o cartão antes de recomeçar.</p><details class="album"><summary>Acrescentar ou trocar fotografias</summary><div class="album-grid">${etapas.map((e,i)=>`<section class="photo-slot compact" data-photo-slot="${i}"><h3>${i+1}. ${esc(shortName(e))}</h3><div class="photo-body"></div><p class="photo-status" role="status"></p></section>`).join('')}</div></details><details class="review"><summary>Rever as perguntas</summary>${etapas.map((e,i)=>`<div class="review-item"><h3>${e.id}. ${esc(e.local)}</h3><p>${esc(e.pergunta)}</p><p class="muted">A tua resposta: ${letters[state.answers[i]]} · ${esc(e.respostas[state.answers[i]])}</p><p><strong>${letters[e.correta]} · ${esc(e.respostas[e.correta])}</strong></p><p class="muted">${esc(e.explicacao)}</p></div>`).join('')}</details></section>`;
+  main.innerHTML=`<section class="finish fade-in" aria-labelledby="finish-title"><p class="eyebrow">CIRCUITO FECHADO</p><h1 id="finish-title">Coimbra ficou <em>ligada.</em></h1><p class="finish-stats">${etapas.length} paragens · ${km(TOTAL)} km · <span data-elapsed>${elapsedTime()}</span></p><figure class="card-frame"><div id="card-slot" class="card-slot" role="status">A ligar a tua rede…</div></figure><div class="card-actions" id="card-actions" hidden><button class="primary" id="share-card" type="button" hidden>Partilhar cartão</button><a class="primary" id="download-card" download="coimbra-a-energia-que-nos-liga.png">Guardar cartão</a><button class="primary ghost" id="album-pdf" type="button">Guardar álbum em PDF</button><p class="fine-print center" id="album-status" role="status">O cartão e uma página por fotografia, com o desafio e o mapa do ponto de encontro.</p></div><p class="fine-print center">As fotografias ficam só neste telemóvel. Guarda o cartão antes de recomeçar.</p><details class="album"><summary>Acrescentar ou trocar fotografias</summary><div class="album-grid">${etapas.map((e,i)=>`<section class="photo-slot compact" data-photo-slot="${i}"><h3>${i+1}. ${esc(shortName(e))}</h3><div class="photo-body"></div><p class="photo-status" role="status"></p></section>`).join('')}</div></details><details class="review"><summary>Rever as perguntas</summary>${etapas.map((e,i)=>`<div class="review-item"><h3>${e.id}. ${esc(e.local)}</h3><p>${esc(e.pergunta)}</p><p class="muted">A tua resposta: ${letters[state.answers[i]]} · ${esc(e.respostas[state.answers[i]])}</p><p><strong>${letters[e.correta]} · ${esc(e.respostas[e.correta])}</strong></p><p class="muted">${esc(e.explicacao)}</p></div>`).join('')}</details></section>`;
   etapas.forEach((_,i)=>Memories.paintSlot(i));
   $('#share-card').addEventListener('click',shareCard);
+  $('#album-pdf').addEventListener('click',saveAlbum);
   drawCard();syncFooter();
 }
 async function drawCard(){
@@ -91,6 +92,15 @@ async function drawCard(){
     $('#download-card').href=cardURL;$('#card-actions').hidden=false;
     $('#share-card').hidden=!(navigator.canShare&&navigator.canShare({files:[drawCard.file]}));
   }catch(error){if(run===cardRun)slot.textContent='Não foi possível criar o cartão. '+error.message;}
+}
+async function saveAlbum(){
+  const button=$('#album-pdf'),status=$('#album-status');button.disabled=true;
+  try{
+    const file=await Memories.makeAlbum((page,total)=>{status.textContent=`A preparar o álbum… página ${page} de ${total}`;});
+    const url=URL.createObjectURL(file),link=document.createElement('a');
+    link.href=url;link.download='coimbra-em-rede-album.pdf';document.body.append(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),60000);status.textContent='Álbum guardado.';
+  }catch(error){status.textContent=error.message;}finally{button.disabled=false;}
 }
 async function shareCard(){try{await navigator.share({files:[drawCard.file],title:'Coimbra · a energia que nos liga'});}catch{}}
 Memories.onChange=()=>{if(state?.finishedAt&&$('#card-slot'))drawCard();};

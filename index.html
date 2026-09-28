@@ -166,6 +166,8 @@ legend{padding:0;margin:0 0 16px;font-size:1.5rem;line-height:1.25;width:100%}
 .card-actions[hidden]{display:none}
 .card-actions #share-card+a{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .card-actions [hidden]{display:none}
+.primary.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.primary.ghost:hover{background:var(--soft)}
 .finish details{text-align:left;margin-top:16px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .finish summary{cursor:pointer;font-weight:600;padding:15px 16px}
 .album-grid{display:grid;grid-template-columns:1fr;gap:4px;padding:0 12px 14px}
@@ -575,14 +577,14 @@ body:has(dialog[open]){overflow:hidden}
     {
   "local": "Arcos de São Sebastião · Rotunda do Papa",
   "tema": "Uma visita papal",
-  "latitude": 40.20623,
-  "longitude": -8.42101,
+  "latitude": 40.206808498623815,
+  "longitude": -8.420452456435713,
   "distanciaAcumulada": 2.1,
   "imagem": "images/arcos-jardim.jpg",
   "foto": "A equipa junto aos Arcos do Jardim.",
   "desafio": "Desafio: tirem uma fotografia com toda a equipa a olhar para o topo dos Arcos do Jardim.",
   "localizacao": "No passeio junto aos Arcos e à Rotunda do Papa, do lado do Jardim Botânico. Não entrem na faixa de rodagem.",
-  "pergunta": "Que Papa visitou Coimbra em 1982 e recebeu o grau de Doutor Honoris Causa pela Universidade de Coimbra?",
+  "pergunta": "Que Papa visitou Coimbra e recebeu o grau de Doutor Honoris Causa pela Universidade de Coimbra?",
   "respostas": [
     {
       "letra": "A",
@@ -643,7 +645,7 @@ body:has(dialog[open]){overflow:hidden}
   "comica": false,
   "fonte": "https://www.uc.pt/cultura/ideias/numeros-redondos/primeiros-passos-jb/",
   "fonteNome": "Universidade de Coimbra",
-  "caminho": "Regressem às Docas pela Mata e pela saída da Rua da Alegria, se a travessia estiver aberta, seguindo depois para o Parque Verde. Não há outra paragem de quiz pelo caminho. Se a Mata estiver fechada, consultem a alternativa em “Sobre o passeio”.",
+  "caminho": "Regressem à base!",
   "aviso": "A travessia depende dos acessos abertos. Não sigam a linha do mapa através de caminhos fechados."
 },
     {
@@ -685,6 +687,8 @@ body:has(dialog[open]){overflow:hidden}
   ]
 }
 </script>
+
+
 
 
 
@@ -971,12 +975,126 @@ const Memories = (() => {
     stats.forEach(([v,l],i)=>{const x=W/6+i*W/3;c.fillStyle=CREAM;c.font=`58px ${SERIF}`;c.fillText(v,x,1500);c.fillStyle='rgba(251,243,223,.6)';c.font=`700 18px ${FONT}`;c.fillText(l,x,1536);});
     c.fillStyle='rgba(244,199,97,.35)';c.fillRect(W/3,1452,1,94);c.fillRect(2*W/3,1452,1,94);
     skyline(c,random);
-    bolt(c,W/2-236,1884,15,GOLD);
-    c.fillStyle=CREAM;c.font=`600 24px ${FONT}`;c.fillText('E-REDES  ·  Coimbra, em boa companhia',W/2+12,1893);
-    return blob(canvas,'image/png');
+    footer(c);
+    return canvas;
   }
-  async function makeCard(){if(busy)throw new Error('Aguarda que a fotografia termine de ser guardada.');return draw();}
-  return {slotHTML,paintSlot,records,store,compress,makeCard,clearURLs,set onChange(fn){onChange=fn;}};
+  function footer(c){bolt(c,W/2-236,1884,15,GOLD);c.textAlign='center';c.fillStyle=CREAM;c.font=`600 24px ${FONT}`;c.fillText('E-REDES  ·  Coimbra, em boa companhia',W/2+12,1893);}
+  async function makeCard(){if(busy)throw new Error('Aguarda que a fotografia termine de ser guardada.');return blob(await draw(),'image/png');}
+
+  // ——— Álbum em PDF: o cartão e uma página grande por fotografia ———
+  function wrap(c,text,max){
+    const lines=[];let line='';
+    for(const word of String(text).split(/\s+/)){const next=line?line+' '+word:word;if(line&&c.measureText(next).width>max){lines.push(line);line=word;}else line=next;}
+    if(line)lines.push(line);return lines;
+  }
+  function rounded(c,x,y,w,h,r){c.beginPath();c.roundRect(x,y,w,h,r);}
+  // Mosaicos do OpenStreetMap, com recurso a um esquema do percurso quando não há ligação.
+  const tiles=new Map();
+  function tile(url){
+    if(!tiles.has(url))tiles.set(url,new Promise((resolve,reject)=>{const img=new Image();img.crossOrigin='anonymous';const timer=setTimeout(()=>reject(new Error('timeout')),6000);img.onload=()=>{clearTimeout(timer);resolve(img);};img.onerror=()=>{clearTimeout(timer);reject(new Error('tile'));};img.src=url;}).catch(error=>{tiles.delete(url);throw error;}));
+    return tiles.get(url);
+  }
+  async function mapPanel(c,index,x,y,w,h){
+    const Z=16,S=1.5,N=256*2**Z,e=etapas[index];
+    const world=(lat,lon)=>{const r=lat*Math.PI/180;return [(lon+180)/360*N,(1-Math.log(Math.tan(r)+1/Math.cos(r))/Math.PI)/2*N];};
+    const [cx,cy]=world(e.latitude,e.longitude);
+    const project=(lat,lon)=>{const [px,py]=world(lat,lon);return [x+w/2+(px-cx)*S,y+h/2+(py-cy)*S];};
+    c.save();rounded(c,x,y,w,h,24);c.clip();
+    let online=false;
+    try{
+      const jobs=[];
+      for(let tx=Math.floor((cx-w/2/S)/256);tx<=Math.floor((cx+w/2/S)/256);tx++)for(let ty=Math.floor((cy-h/2/S)/256);ty<=Math.floor((cy+h/2/S)/256);ty++)
+        jobs.push(tile(`https://tile.openstreetmap.org/${Z}/${tx}/${ty}.png`).then(img=>[img,tx,ty]));
+      const loaded=await Promise.all(jobs);
+      for(const [img,tx,ty] of loaded)c.drawImage(img,x+w/2+(tx*256-cx)*S,y+h/2+(ty*256-cy)*S,256*S,256*S);
+      c.fillStyle='rgba(10,33,29,.12)';c.fillRect(x,y,w,h);online=true;
+    }catch{
+      c.fillStyle='#123a33';c.fillRect(x,y,w,h);
+      c.fillStyle='rgba(251,243,223,.08)';for(let py=y+18;py<y+h;py+=30)for(let px=x+18;px<x+w;px+=30)c.fillRect(px,py,2,2);
+      const river=RIVER.map(([la,lo])=>project(la,lo));c.beginPath();river.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));
+      c.lineCap='round';c.lineJoin='round';c.strokeStyle='rgba(38,110,112,.6)';c.lineWidth=70;c.stroke();
+    }
+    // Percurso completo, com a paragem desta página em destaque.
+    const route=etapas.map(p=>project(p.latitude,p.longitude));
+    c.lineCap='round';c.lineJoin='round';
+    c.beginPath();route.forEach((p,i)=>i?c.lineTo(...p):c.moveTo(...p));c.strokeStyle='rgba(6,20,16,.55)';c.lineWidth=11;c.stroke();
+    c.setLineDash([14,10]);c.strokeStyle=GOLD;c.lineWidth=5;c.stroke();c.setLineDash([]);
+    route.forEach(([px,py],i)=>{if(i===index)return;c.beginPath();c.arc(px,py,9,0,Math.PI*2);c.fillStyle=CREAM;c.fill();c.strokeStyle=NIGHT;c.lineWidth=3;c.stroke();});
+    const [px,py]=route[index];
+    c.save();c.shadowColor='rgba(244,199,97,.9)';c.shadowBlur=24;c.beginPath();c.arc(px,py,30,0,Math.PI*2);c.fillStyle=GOLD;c.fill();c.restore();
+    c.strokeStyle=NIGHT;c.lineWidth=4;c.stroke();c.fillStyle=NIGHT;c.textAlign='center';c.font=`700 28px ${FONT}`;c.fillText(String(index+1),px,py+10);
+    if(online){const text='© OpenStreetMap';c.font=`600 16px ${FONT}`;const tw=c.measureText(text).width;c.fillStyle='rgba(255,255,255,.85)';c.fillRect(x+w-tw-20,y+h-30,tw+20,30);c.fillStyle='#333';c.textAlign='right';c.fillText(text,x+w-10,y+h-9);}
+    c.restore();
+    c.strokeStyle='rgba(244,199,97,.6)';c.lineWidth=2;rounded(c,x,y,w,h,24);c.stroke();
+  }
+  function background(c){
+    const bg=c.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#123a33');bg.addColorStop(.55,NIGHT);bg.addColorStop(1,'#071814');c.fillStyle=bg;c.fillRect(0,0,W,H);
+  }
+  async function photoPage(index,img){
+    const e=etapas[index],canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const c=canvas.getContext('2d');
+    background(c);c.textAlign='left';
+    const X=60,CW=W-120;
+    // Cabeçalho
+    let y=110;c.fillStyle=GOLD;c.font=`700 24px ${FONT}`;c.fillText(`COIMBRA EM REDE  ·  PARAGEM ${String(index+1).padStart(2,'0')} DE ${etapas.length}`,X,y);
+    c.font=`66px ${SERIF}`;const title=wrap(c,e.local,CW).slice(0,2);y+=34;
+    c.fillStyle=CREAM;title.forEach(line=>{y+=70;c.fillText(line,X,y);});
+    y+=54;c.fillStyle=GOLD;c.font=`italic 36px ${SERIF}`;c.fillText(e.tema,X,y);
+    const top=y+40;
+    // Parte de baixo, calculada de baixo para cima: mapa, ponto de encontro e desafio.
+    const mapH=380,mapY=1800-mapH;
+    c.font=`28px ${FONT}`;const place=wrap(c,e.localizacao,CW-40).slice(0,3);
+    const placeY=mapY-36-place.length*40-34;
+    c.font=`italic 34px ${SERIF}`;const challenge=e.desafio?wrap(c,e.desafio,CW-40).slice(0,3):[];
+    const challengeY=placeY-(challenge.length?challenge.length*46+40:0);
+    // Fotografia inteira, sem cortes, no espaço que sobra.
+    const boxH=challengeY-40-top,scale=Math.min(CW/img.naturalWidth,boxH/img.naturalHeight);
+    const pw=img.naturalWidth*scale,ph=img.naturalHeight*scale,px=(W-pw)/2,py=top+(boxH-ph)/2;
+    c.save();c.shadowColor='rgba(244,199,97,.55)';c.shadowBlur=36;c.fillStyle=CREAM;rounded(c,px-8,py-8,pw+16,ph+16,26);c.fill();c.restore();
+    c.save();rounded(c,px,py,pw,ph,20);c.clip();c.drawImage(img,px,py,pw,ph);c.restore();
+    if(challenge.length){
+      c.fillStyle=GOLD;c.fillRect(X,challengeY-4,6,challenge.length*46+4);
+      c.fillStyle=CREAM;c.font=`italic 34px ${SERIF}`;challenge.forEach((line,i)=>c.fillText(line,X+30,challengeY+32+i*46));
+    }
+    c.fillStyle=GOLD;c.font=`700 20px ${FONT}`;c.fillText('PONTO DE ENCONTRO',X,placeY+20);
+    c.fillStyle='rgba(251,243,223,.85)';c.font=`28px ${FONT}`;place.forEach((line,i)=>c.fillText(line,X,placeY+62+i*40));
+    await mapPanel(c,index,X,mapY,CW,mapH);
+    footer(c);
+    return canvas;
+  }
+  async function jpeg(canvas){const b=await blob(canvas,'image/jpeg',.9);return new Uint8Array(await b.arrayBuffer());}
+  // PDF mínimo: cada página é uma imagem JPEG do tamanho do cartão.
+  function pdf(pages){
+    const enc=new TextEncoder(),parts=[],offsets=[];let length=0;
+    const push=x=>{const b=typeof x==='string'?enc.encode(x):x;parts.push(b);length+=b.length;};
+    const obj=(n,...body)=>{offsets[n]=length;push(`${n} 0 obj\n`);body.forEach(push);push('\nendobj\n');};
+    const PW=W/2,PH=H/2,size=3+pages.length*3;
+    push('%PDF-1.4\n%âãÏÓ\n');
+    obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+    obj(2,`<< /Type /Pages /Count ${pages.length} /Kids [${pages.map((_,k)=>`${3+k*3} 0 R`).join(' ')}] >>`);
+    pages.forEach((bytes,k)=>{
+      const n=3+k*3,draw=`q ${PW} 0 0 ${PH} 0 0 cm /Im0 Do Q`;
+      obj(n,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${PW} ${PH}] /Resources << /XObject << /Im0 ${n+2} 0 R >> >> /Contents ${n+1} 0 R >>`);
+      obj(n+1,`<< /Length ${draw.length} >>\nstream\n${draw}\nendstream`);
+      obj(n+2,`<< /Type /XObject /Subtype /Image /Width ${W} /Height ${H} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${bytes.length} >>\nstream\n`,bytes,'\nendstream');
+    });
+    const xref=length;
+    push(`xref\n0 ${size}\n0000000000 65535 f \n`+offsets.slice(1).map(o=>String(o).padStart(10,'0')+' 00000 n \n').join(''));
+    push(`trailer\n<< /Size ${size} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+    return new Blob(parts,{type:'application/pdf'});
+  }
+  async function makeAlbum(progress=()=>{}){
+    if(busy)throw new Error('Aguarda que a fotografia termine de ser guardada.');
+    const photos=await records();if(!photos.length)throw new Error('Ainda não há fotografias para o álbum.');
+    const total=photos.length+1,pages=[];
+    progress(1,total);pages.push(await jpeg(await draw()));
+    for(const p of photos){
+      progress(pages.length+1,total);
+      let img;try{img=await image(p.blob);}catch{continue;}
+      pages.push(await jpeg(await photoPage(p.index,img)));
+    }
+    return pdf(pages);
+  }
+  return {slotHTML,paintSlot,records,store,compress,makeCard,makeAlbum,clearURLs,set onChange(fn){onChange=fn;}};
 })();
 
 </script>
@@ -1059,9 +1177,10 @@ function afterAnswer(e,a){
 
 function renderFinish(){
   resetPage();
-  main.innerHTML=`<section class="finish fade-in" aria-labelledby="finish-title"><p class="eyebrow">CIRCUITO FECHADO</p><h1 id="finish-title">Coimbra ficou <em>ligada.</em></h1><p class="finish-stats">${etapas.length} paragens · ${km(TOTAL)} km · <span data-elapsed>${elapsedTime()}</span></p><figure class="card-frame"><div id="card-slot" class="card-slot" role="status">A ligar a tua rede…</div></figure><div class="card-actions" id="card-actions" hidden><button class="primary" id="share-card" type="button" hidden>Partilhar cartão</button><a class="primary" id="download-card" download="coimbra-a-energia-que-nos-liga.png">Guardar cartão</a></div><p class="fine-print center">As fotografias ficam só neste telemóvel. Guarda o cartão antes de recomeçar.</p><details class="album"><summary>Acrescentar ou trocar fotografias</summary><div class="album-grid">${etapas.map((e,i)=>`<section class="photo-slot compact" data-photo-slot="${i}"><h3>${i+1}. ${esc(shortName(e))}</h3><div class="photo-body"></div><p class="photo-status" role="status"></p></section>`).join('')}</div></details><details class="review"><summary>Rever as perguntas</summary>${etapas.map((e,i)=>`<div class="review-item"><h3>${e.id}. ${esc(e.local)}</h3><p>${esc(e.pergunta)}</p><p class="muted">A tua resposta: ${letters[state.answers[i]]} · ${esc(e.respostas[state.answers[i]])}</p><p><strong>${letters[e.correta]} · ${esc(e.respostas[e.correta])}</strong></p><p class="muted">${esc(e.explicacao)}</p></div>`).join('')}</details></section>`;
+  main.innerHTML=`<section class="finish fade-in" aria-labelledby="finish-title"><p class="eyebrow">CIRCUITO FECHADO</p><h1 id="finish-title">Coimbra ficou <em>ligada.</em></h1><p class="finish-stats">${etapas.length} paragens · ${km(TOTAL)} km · <span data-elapsed>${elapsedTime()}</span></p><figure class="card-frame"><div id="card-slot" class="card-slot" role="status">A ligar a tua rede…</div></figure><div class="card-actions" id="card-actions" hidden><button class="primary" id="share-card" type="button" hidden>Partilhar cartão</button><a class="primary" id="download-card" download="coimbra-a-energia-que-nos-liga.png">Guardar cartão</a><button class="primary ghost" id="album-pdf" type="button">Guardar álbum em PDF</button><p class="fine-print center" id="album-status" role="status">O cartão e uma página por fotografia, com o desafio e o mapa do ponto de encontro.</p></div><p class="fine-print center">As fotografias ficam só neste telemóvel. Guarda o cartão antes de recomeçar.</p><details class="album"><summary>Acrescentar ou trocar fotografias</summary><div class="album-grid">${etapas.map((e,i)=>`<section class="photo-slot compact" data-photo-slot="${i}"><h3>${i+1}. ${esc(shortName(e))}</h3><div class="photo-body"></div><p class="photo-status" role="status"></p></section>`).join('')}</div></details><details class="review"><summary>Rever as perguntas</summary>${etapas.map((e,i)=>`<div class="review-item"><h3>${e.id}. ${esc(e.local)}</h3><p>${esc(e.pergunta)}</p><p class="muted">A tua resposta: ${letters[state.answers[i]]} · ${esc(e.respostas[state.answers[i]])}</p><p><strong>${letters[e.correta]} · ${esc(e.respostas[e.correta])}</strong></p><p class="muted">${esc(e.explicacao)}</p></div>`).join('')}</details></section>`;
   etapas.forEach((_,i)=>Memories.paintSlot(i));
   $('#share-card').addEventListener('click',shareCard);
+  $('#album-pdf').addEventListener('click',saveAlbum);
   drawCard();syncFooter();
 }
 async function drawCard(){
@@ -1074,6 +1193,15 @@ async function drawCard(){
     $('#download-card').href=cardURL;$('#card-actions').hidden=false;
     $('#share-card').hidden=!(navigator.canShare&&navigator.canShare({files:[drawCard.file]}));
   }catch(error){if(run===cardRun)slot.textContent='Não foi possível criar o cartão. '+error.message;}
+}
+async function saveAlbum(){
+  const button=$('#album-pdf'),status=$('#album-status');button.disabled=true;
+  try{
+    const file=await Memories.makeAlbum((page,total)=>{status.textContent=`A preparar o álbum… página ${page} de ${total}`;});
+    const url=URL.createObjectURL(file),link=document.createElement('a');
+    link.href=url;link.download='coimbra-em-rede-album.pdf';document.body.append(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),60000);status.textContent='Álbum guardado.';
+  }catch(error){status.textContent=error.message;}finally{button.disabled=false;}
 }
 async function shareCard(){try{await navigator.share({files:[drawCard.file],title:'Coimbra · a energia que nos liga'});}catch{}}
 Memories.onChange=()=>{if(state?.finishedAt&&$('#card-slot'))drawCard();};

@@ -155,6 +155,8 @@ legend{padding:0;margin:0 0 16px;font-size:1.5rem;line-height:1.25;width:100%}
 .card-actions[hidden]{display:none}
 .card-actions #share-card+a{background:#fff;color:var(--ink);border:1px solid var(--line)}
 .card-actions [hidden]{display:none}
+.primary.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.primary.ghost:hover{background:var(--soft)}
 .finish details{text-align:left;margin-top:16px;border:1px solid var(--line);border-radius:14px;background:#fff}
 .finish summary{cursor:pointer;font-weight:600;padding:15px 16px}
 .album-grid{display:grid;grid-template-columns:1fr;gap:4px;padding:0 12px 14px}

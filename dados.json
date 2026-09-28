@@ -295,14 +295,14 @@
     {
   "local": "Arcos de São Sebastião · Rotunda do Papa",
   "tema": "Uma visita papal",
-  "latitude": 40.20623,
-  "longitude": -8.42101,
+  "latitude": 40.206808498623815,
+  "longitude": -8.420452456435713,
   "distanciaAcumulada": 2.1,
   "imagem": "images/arcos-jardim.jpg",
   "foto": "A equipa junto aos Arcos do Jardim.",
   "desafio": "Desafio: tirem uma fotografia com toda a equipa a olhar para o topo dos Arcos do Jardim.",
   "localizacao": "No passeio junto aos Arcos e à Rotunda do Papa, do lado do Jardim Botânico. Não entrem na faixa de rodagem.",
-  "pergunta": "Que Papa visitou Coimbra em 1982 e recebeu o grau de Doutor Honoris Causa pela Universidade de Coimbra?",
+  "pergunta": "Que Papa visitou Coimbra e recebeu o grau de Doutor Honoris Causa pela Universidade de Coimbra?",
   "respostas": [
     {
       "letra": "A",
@@ -363,7 +363,7 @@
   "comica": false,
   "fonte": "https://www.uc.pt/cultura/ideias/numeros-redondos/primeiros-passos-jb/",
   "fonteNome": "Universidade de Coimbra",
-  "caminho": "Regressem às Docas pela Mata e pela saída da Rua da Alegria, se a travessia estiver aberta, seguindo depois para o Parque Verde. Não há outra paragem de quiz pelo caminho. Se a Mata estiver fechada, consultem a alternativa em “Sobre o passeio”.",
+  "caminho": "Regressem à base!",
   "aviso": "A travessia depende dos acessos abertos. Não sigam a linha do mapa através de caminhos fechados."
 },
     {

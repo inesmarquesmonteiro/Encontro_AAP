@@ -65,7 +65,7 @@ function afterAnswer(e,a){
   const i=e.id-1,correct=a===e.correta,next=etapas[i+1],current=i===state.index,distance=next?Math.round((next.distanciaAcumulada-e.distanciaAcumulada)*1000):0;
   const title=e.categoria==='Lenda académica'?(correct?'É essa a lenda!':'A lenda conta-se assim…'):e.comica?(correct?'Apanhaste a brincadeira!':'Uma pausa para rir.'):correct?'Certo!':`Afinal, é a ${letters[e.correta]}.`;
   const feedback=`<div class="feedback ${e.comica?'neutral':correct?'':'incorrect'}"><h2>${title}</h2><p>${esc(e.explicacao)}</p>${e.fonte?`<a class="source" href="${esc(e.fonte)}" target="_blank" rel="noopener">Fonte: ${esc(e.fonteNome||'consultar')} ↗</a>`:''}</div>`;
-  const photo=`<section class="photo-slot" data-photo-slot="${i}" aria-label="Fotografia desta paragem"><h2>Uma memória deste lugar</h2><div class="photo-body"><p class="fine-print">A carregar…</p></div><p class="photo-status" role="status"></p></section>`;
+  const photo=`<section class="photo-slot" data-photo-slot="${i}" aria-label="Fotografia desta paragem"><h2>Uma memória deste lugar</h2>${e.desafio?`<p class="photo-challenge">${esc(e.desafio)}</p>`:''}<div class="photo-body"><p class="fine-print">A carregar…</p></div><p class="photo-status" role="status"></p></section>`;
   let move;
   if(state.finishedAt)move=`<div class="next"><button class="primary" type="button" data-action="card">Voltar ao cartão ${arrow}</button></div>`;
   else if(!current)move=`<div class="next"><button class="primary" type="button" data-view="${state.index}">Voltar à paragem ${state.index+1} ${arrow}</button></div>`;
@@ -146,7 +146,7 @@ function validateData(data){
     if(!Array.isArray(e.respostas)||e.respostas.length!==4||!e.respostas.every((r,j)=>r&&r.letra===letters[j]&&typeof r.texto==='string'&&r.texto.trim()))throw new Error(prefix+'usa quatro respostas com letra A, B, C e D, por esta ordem, e texto.');
     if(!letters.includes(e.correta))throw new Error(prefix+'correta deve ser A, B, C ou D.');
     if(typeof e.comica!=='boolean')throw new Error(prefix+'comica deve ser true ou false.');
-    for(const field of ['imagem','foto','fonte','fonteNome','caminho','aviso','categoria'])if(e[field]!=null&&typeof e[field]!=='string')throw new Error(prefix+`${field} deve ser texto.`);
+    for(const field of ['imagem','foto','fonte','fonteNome','caminho','aviso','categoria','desafio'])if(e[field]!=null&&typeof e[field]!=='string')throw new Error(prefix+`${field} deve ser texto.`);
     if(e.fonte&&!/^https?:\/\//i.test(e.fonte))throw new Error(prefix+'a fonte deve começar por https:// ou http://.');
     if(e.imagem&&(!/^images\/[\w/.-]+$/i.test(e.imagem)||e.imagem.includes('..')))throw new Error(prefix+'a imagem deve ser um caminho dentro de images/.');
   });

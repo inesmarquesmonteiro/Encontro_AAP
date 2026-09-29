@@ -1,6 +1,6 @@
 {
   "titulo": "Coimbra em Rede",
-  "introducao": "11 paragens, 11 perguntas e uma fotografia em cada lugar. No fim, as tuas memórias ligam-se numa rede de Coimbra.",
+  "introducao": "9 paragens, 9 perguntas e uma fotografia em cada lugar. No fim, as tuas memórias ligam-se numa rede de Coimbra.",
   "etapas": [
     {
     "local": "Docas do Mondego",
@@ -155,108 +155,36 @@
       "distanciaAcumulada": 1.4,
       "imagem": "images/porta-ferrea.jpg",
       "foto": "Enquadramento da Faculdade de Letras, Biblioteca Geral e Porta Férrea.",
-      "desafio": "Escolham quem da equipa teria mais perfil para estudar na Faculdade de Letras. O escolhido tira uma selfie com toda a equipa em frente à Faculdade",
-      "localizacao": "Na zona do Largo da Porta Férrea, junto à Faculdade de Letras e à Biblioteca Geral. Reúnam o grupo sem bloquear as entradas.",
-      "pergunta": "A instituição que hoje conhecemos como Universidade de Coimbra foi fundada em que cidade, em 1290?",
+      "desafio": "Escolham quem da equipa teria mais perfil para estudar na Faculdade de Letras. O escolhido tira uma selfie com toda a equipa em frente à Faculdade.",
+      "localizacao": "Na zona do Largo da Porta Férrea, junto à Faculdade de Letras e à Biblioteca Geral, com a Torre da Universidade à vista. Reúnam o grupo sem bloquear as entradas.",
+      "pergunta": "Duas em uma: em que cidade foi fundada a Universidade, em 1290, e o que é a famosa “Cabra” da Torre?",
       "respostas": [
         {
           "letra": "A",
-          "texto": "Porto"
+          "texto": "Coimbra · um dos sinos da Torre da Universidade"
         },
         {
           "letra": "B",
-          "texto": "Coimbra"
+          "texto": "Lisboa · um dos sinos da Torre da Universidade"
         },
         {
           "letra": "C",
-          "texto": "Lisboa"
+          "texto": "Lisboa · a mascote que vive no Jardim Botânico"
         },
         {
           "letra": "D",
-          "texto": "Numa reunião que ainda está à espera de ata"
+          "texto": "Coimbra · uma cadeira em que ninguém passa à primeira"
         }
       ],
-      "correta": "C",
-      "explicacao": "A Universidade foi fundada em Lisboa, em 1290, por iniciativa de D. Dinis. Depois de várias transferências entre Lisboa e Coimbra, fixou-se definitivamente em Coimbra em 1537.",
+      "correta": "B",
+      "explicacao": "A Universidade foi fundada em Lisboa, em 1290, por iniciativa de D. Dinis. Depois de várias transferências entre Lisboa e Coimbra, fixou-se definitivamente em Coimbra em 1537. Já a “Cabra” é o nome pelo qual é conhecido um dos sinos da Torre: o relógio e os sinos marcaram os ritmos da vida académica. Coimbra já tinha notificações muito antes dos telemóveis.",
       "comica": false,
       "fonte": "https://www.uc.pt/sobrenos/historia/xiii-a-xvi/",
       "fonteNome": "Universidade de Coimbra",
-      "caminho": "Atravessem a Porta Férrea para entrar no Pátio das Escolas, se o acesso estiver aberto."
+      "caminho": "Espreitem o Pátio das Escolas pela Porta Férrea, se estiver aberto, e sigam pela Rua Larga até à Praça D. Dinis. Passem pela estátua e pelo Departamento de Matemática e continuem até ao topo das Escadas Monumentais."
     },
     {
-      "local": "Pátio das Escolas",
-      "tema": "À procura da Cabra",
-      "latitude": 40.20737,
-      "longitude": -8.42601,
-      "distanciaAcumulada": 1.45,
-      "imagem": "images/paco-escolas.jpg",
-      "foto": "A Torre vista do Paço, destacando os sinos.",
-      "desafio": "Desafio: tirem uma fotografia com toda a equipa e a Torre da Universidade ao fundo, completa.",
-      "localizacao": "No terreiro, com vista para a Torre. Se o acesso estiver condicionado, fiquem num ponto exterior com vista para a Torre.",
-      "pergunta": "O que é a famosa “Cabra” da Universidade?",
-      "respostas": [
-        {
-          "letra": "A",
-          "texto": "Um dos sinos da Torre da Universidade"
-        },
-        {
-          "letra": "B",
-          "texto": "A mascote que vive no Jardim Botânico"
-        },
-        {
-          "letra": "C",
-          "texto": "Uma cadeira em que ninguém passa à primeira"
-        },
-        {
-          "letra": "D",
-          "texto": "A alcunha da subida que acabámos de fazer"
-        }
-      ],
-      "correta": "A",
-      "explicacao": "“Cabra” é o nome pelo qual é conhecido um dos sinos da Torre. O relógio e os sinos marcaram os ritmos da vida académica. Coimbra já tinha notificações muito antes dos telemóveis.",
-      "comica": false,
-      "fonte": "https://pt.wikipedia.org/wiki/Pa%C3%A7o_das_Escolas",
-      "fonteNome": "Paço das Escolas — referência histórica",
-      "caminho": "Saiam pela Porta Férrea e sigam pela Rua Larga até à Praça D. Dinis, em frente ao Departamento de Matemática."
-    },
-    {
-  "local": "D. Dinis · Departamento de Matemática",
-  "tema": "Matemática à primeira vista",
-  "latitude": 40.20807,
-  "longitude": -8.42219,
-  "distanciaAcumulada": 1.750,
-  "imagem": "images/d-dinis.jpg",
-  "foto": "A equipa junto à estátua de D. Dinis e ao Departamento de Matemática.",
-  "desafio": "Desafio: tirem uma fotografia de toda a equipa em que D. Dinis pareça fazer parte do grupo.",
-  "localizacao": "Praça D. Dinis, junto à estátua, em frente ao Departamento de Matemática.",
-  "pergunta": "Sem voltar a olhar para o edifício: quantos pisos tem o Departamento de Matemática?",
-  "respostas": [
-    {
-      "letra": "A",
-      "texto": "4"
-    },
-    {
-      "letra": "B",
-      "texto": "5"
-    },
-    {
-      "letra": "C",
-      "texto": "6"
-    },
-    {
-      "letra": "D",
-      "texto": "7"
-    }
-  ],
-  "correta": "C",
-  "explicacao": "O edifício tem 6 pisos. Começou a ser construído em 1964 e vale a pena reparar também nos baixos-relevos junto à entrada, da autoria de Gustavo Bastos: de um lado representam a Matemática como Ciência da Natureza e, do outro, a Matemática como Ciência do Pensamento.",
-  "comica": false,
-  "fonte": "https://worldheritage.uc.pt/pt/depmatematica/",
-  "fonteNome": "Universidade de Coimbra — Património Mundial",
-  "caminho": "Sigam até ao topo das Escadas Monumentais e observem as esferas de pedra antes de descer."
-},
-    {
-  "local": "Escadas Monumentais",
+  "local": "D. Dinis · Escadas Monumentais",
   "tema": "Degrau a degrau",
   "latitude": 40.20813,
   "longitude": -8.42183,
